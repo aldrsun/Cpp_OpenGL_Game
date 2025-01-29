@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(OpenGL-Snake_Game)
+project(OpenGL_Snake_Game)
 
 set(OpenGL_GL_PREFERENCE GLVND)
 # Find required packages
