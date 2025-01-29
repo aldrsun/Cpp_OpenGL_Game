@@ -29,6 +29,6 @@ private:
     GLFWwindow* m_window = nullptr;
 };
 
-} // Engine
+} // Game
 
 #endif //APPLICATION_H

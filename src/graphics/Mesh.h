@@ -16,6 +16,6 @@ private:
     GLsizei m_indexCount;
 };
 
-} // Engine
+} // Graphics
 
 #endif //MESH_H

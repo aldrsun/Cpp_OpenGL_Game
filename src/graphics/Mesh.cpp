@@ -11,8 +11,8 @@ namespace Graphics {
             sum_x += v[0];
             sum_y += v[1];
         }
-        float center_x = sum_x / static_cast<float>(vertex_count);
-        float center_y = sum_y / static_cast<float>(vertex_count);
+        const float center_x = sum_x / static_cast<float>(vertex_count);
+        const float center_y = sum_y / static_cast<float>(vertex_count);
 
         // Define vertex data
         std::vector<float> vertex_data;

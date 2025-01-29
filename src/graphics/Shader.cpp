@@ -68,4 +68,4 @@ namespace Shader {
 
         return shaderProgram;
     }
-} // namespace Graphics
+} // namespace Shader

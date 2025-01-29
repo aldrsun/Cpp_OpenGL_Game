@@ -8,6 +8,6 @@ namespace Utils {
     public:
         static void Log(const std::string& message);
     };
-} // namespace Engine::Utils
+} // namespace Utils
 
 #endif
