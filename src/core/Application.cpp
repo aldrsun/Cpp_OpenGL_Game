@@ -20,6 +20,7 @@ namespace Game {
         }
 
         // Create a windowed mode window and its OpenGL context
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
         m_window = glfwCreateWindow(800, 800, "OpenGL Snake Game", nullptr, nullptr);
         if (!m_window) {
             Utils::Logger::Log("Failed to create GLFW window");
@@ -54,7 +55,10 @@ namespace Game {
     }
 
     int Application::m_GenerateGameObjects() { // Temporary, for dev purposes
-        std::vector<std::vector<float>> vertices;
+
+        m_mesh = std::make_unique<Graphics::Mesh>(-0.5, -0.5, 1, 1);
+
+        /*std::vector<std::vector<float>> vertices;
         vertices.reserve(6);
         constexpr float delta_angle = (2 * 3.14159265) / 6;
         constexpr float sin_delta_angle = std::sin(delta_angle);
@@ -69,7 +73,7 @@ namespace Game {
             x = x * cos_delta_angle - y * sin_delta_angle;
             y = temp_previous_x * sin_delta_angle + y * cos_delta_angle;
         }
-        m_mesh = std::make_unique<Graphics::Mesh>(vertices);
+        m_mesh = std::make_unique<Graphics::Mesh>(vertices);*/
         return 0;
     }
 

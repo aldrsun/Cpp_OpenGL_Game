@@ -67,7 +67,49 @@ namespace Graphics {
     }
 
     Mesh::Mesh(const float &x, const float &y, const float &width, const float &height) {
-        m_indexCount = 0;
+        // Define vertex data
+        std::vector<float> vertex_data;
+        vertex_data.reserve(8);
+        for (int i = 0; i < 4; i++) { // A trick to make assigning values compact, may be - and probably is unnecessary
+            vertex_data.emplace_back(x + width * static_cast<float>(static_cast<bool>((i + 1) & 2)));
+            vertex_data.emplace_back(y + height * static_cast<float>(static_cast<bool>(i & 2)));
+        }
+
+        // Define index data
+        std::vector<GLuint> index_data;
+        m_indexCount = 6;
+        index_data.reserve(m_indexCount);
+        for (int i = 0; i < 2; i++) {
+            index_data.emplace_back(0);
+            index_data.emplace_back(1 + i);
+            index_data.emplace_back(2 + i);
+        }
+
+        // Create a vertex buffer object (VBO), element array buffer object (EBO) and vertex array object (VAO)
+        glGenVertexArrays(1, &m_vao);
+        glGenBuffers(1, &m_vbo);
+        glGenBuffers(1, &m_ebo);
+
+        // Bind the VAO
+        glBindVertexArray(m_vao);
+
+        // Bind the VBO and copy vertex data
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+        glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeof(float) * vertex_data.size()), &vertex_data[0], GL_STATIC_DRAW);
+
+        // Bind the EBO and copy the index data
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(index_data.size() * sizeof(GLuint)), &index_data[0], GL_STATIC_DRAW);
+
+        // Vertex attribute setup
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), static_cast<void *>(nullptr));
+        glEnableVertexAttribArray(0);
+
+        // Unbind the VAO
+        glBindVertexArray(0);
+        // Unbind the VBO and EBO
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
 
