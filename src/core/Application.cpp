@@ -56,7 +56,7 @@ namespace Game {
 
     int Application::m_GenerateGameObjects() { // Temporary, for dev purposes
 
-        m_mesh = std::make_unique<Graphics::Mesh>(-0.5, -0.5, 1, 1);
+        m_mesh = std::make_unique<Graphics::Mesh>(-0.75f, -0.0f, 0.5f, 0.5f, m_shaderProgram);
 
         /*std::vector<std::vector<float>> vertices;
         vertices.reserve(6);
@@ -92,6 +92,16 @@ namespace Game {
 
     void Application::m_Update() {
         // Handle input and update game state
+
+        // TEMPORARY FOR DEV PURPOSES (ROTATE OBJECT AROUND ORIGIN)
+        const float *mesh_position = m_mesh->GetPosition();
+        const float cos_delta_angle = 0.9999;
+        const float sin_delta_angle = fsqrt(1.0 - cos_delta_angle * cos_delta_angle);
+        const float mesh_distance = fsqrt(mesh_position[0] * mesh_position[0] + mesh_position[1] * mesh_position[1]);
+        m_mesh->SetPosition(
+                (mesh_position[0] * cos_delta_angle - mesh_position[1] * sin_delta_angle),
+                (mesh_position[0] * sin_delta_angle + mesh_position[1] * cos_delta_angle)
+            );
     }
 
     void Application::m_Render() {
