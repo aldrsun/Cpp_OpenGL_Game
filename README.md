@@ -1,2 +1,2 @@
-# OpenGL_Snake_Game
-A Simple Snake Game Using C++ and OpenGL
+# Cpp_OpenGL_Game
+Will be a game, I guess
