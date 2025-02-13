@@ -1,14 +1,14 @@
-#ifndef MESH_H
-#define MESH_H
+#ifndef MESH_STATIC_H
+#define MESH_STATIC_H
 #include <GL/glew.h>
 #include <vector>
 
 namespace Graphics {
 
-class Mesh {
+class MeshStatic {
 public:
-    explicit Mesh(const float position[2], const std::vector<std::vector<float>>& vertices_list, const GLuint& shader_program);
-    Mesh(const float& x, const float& y, const float& width, const float& height, const GLuint& shader_program);
+    explicit MeshStatic(const float position[2], const std::vector<std::vector<float>>& vertices_list, const GLuint& shader_program);
+    MeshStatic(const float& x, const float& y, const float& width, const float& height, const GLuint& shader_program);
     void Render() const;
     void Clear();
     [[nodiscard]] const float* GetPosition() const;
@@ -23,4 +23,4 @@ private:
 
 } // Graphics
 
-#endif //MESH_H
+#endif //MESH_STATIC_H

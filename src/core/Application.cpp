@@ -1,9 +1,7 @@
 #include "Application.h"
 #include "../graphics/Shader.h"
-#include "../graphics/Mesh.h"
+#include "../graphics/MeshStatic.h"
 #include "../utils/Logger.h"
-#include <cmath>
-//#include "../input/InputManager.h" // Upcoming..
 
 namespace Game {
     Application::Application() {
@@ -55,25 +53,26 @@ namespace Game {
     }
 
     int Application::m_GenerateGameObjects() { // Temporary, for dev purposes
+        
+        m_meshDynamic = std::make_unique<Graphics::MeshDynamic>(2, m_shaderProgram);
 
-        m_mesh = std::make_unique<Graphics::Mesh>(-0.75f, -0.0f, 0.5f, 0.5f, m_shaderProgram);
+        m_quads[0] = {
+            {
+                {{-0.75f, -0.25f, 0.0f} , {0.8f, 0.14f, 0.14f, 1.0f}},
+                {{-0.75f, 0.25f, 0.0f}  , {0.8f, 0.14f, 0.14f, 1.0f}},
+                {{-0.25f, 0.25f, 0.0f}  , {0.8f, 0.14f, 0.14f, 1.0f}},
+                {{-0.25f, -0.25f, 0.0f} , {0.8f, 0.14f, 0.14f, 1.0f}},
+            }
+        };
+        m_quads[1] = {
+            {
+                {{0.75f, 0.15f, 0.0f} , {0.78f, 0.32f, 0.0f, 1.0f}},
+                {{0.75f, 0.65f, 0.0f}  , {0.78f, 0.32f, 0.0f, 1.0f}},
+                {{0.25f, 0.65f, 0.0f}  , {0.78f, 0.32f, 0.0f, 1.0f}},
+                {{0.25f, 0.15f, 0.0f} , {0.78f, 0.32f, 0.0f, 1.0f}},
+            }
+        };
 
-        /*std::vector<std::vector<float>> vertices;
-        vertices.reserve(6);
-        constexpr float delta_angle = (2 * 3.14159265) / 6;
-        constexpr float sin_delta_angle = std::sin(delta_angle);
-        constexpr float cos_delta_angle = std::cos(delta_angle);
-        float x = 1.0f;
-        float y = 0.0f;
-        for (int i = 0; i < 6; i++) {
-            // Simply, (1, 0) * ((cos(d_a), i * sin(d_a)) ^ n)
-            // Or (previous_x, previous_y) * (cos(d_a), i * sin(d_a))
-            vertices.emplace_back(std::vector<float>{x, y});
-            float temp_previous_x = x;
-            x = x * cos_delta_angle - y * sin_delta_angle;
-            y = temp_previous_x * sin_delta_angle + y * cos_delta_angle;
-        }
-        m_mesh = std::make_unique<Graphics::Mesh>(vertices);*/
         return 0;
     }
 
@@ -92,16 +91,14 @@ namespace Game {
 
     void Application::m_Update() {
         // Handle input and update game state
+        static int direction = 1;
+        for (int i = 0; i < 4; i ++) {
+            m_quads[0].vertices[i].position[0] += 0.01 * direction;
+        }
+        if(m_quads[0].vertices[0].position[0] < -1 || m_quads[0].vertices[2].position[0] > 1) {
+            direction *= -1;
+        }
 
-        // TEMPORARY FOR DEV PURPOSES (ROTATE OBJECT AROUND ORIGIN)
-        const float *mesh_position = m_mesh->GetPosition();
-        const float cos_delta_angle = 0.9999;
-        const float sin_delta_angle = fsqrt(1.0 - cos_delta_angle * cos_delta_angle);
-        const float mesh_distance = fsqrt(mesh_position[0] * mesh_position[0] + mesh_position[1] * mesh_position[1]);
-        m_mesh->SetPosition(
-                (mesh_position[0] * cos_delta_angle - mesh_position[1] * sin_delta_angle),
-                (mesh_position[0] * sin_delta_angle + mesh_position[1] * cos_delta_angle)
-            );
     }
 
     void Application::m_Render() {
@@ -111,7 +108,8 @@ namespace Game {
         // Use the shader program
         glUseProgram(m_shaderProgram);
 
-        m_mesh->Render();
+        m_meshDynamic->UpdateGeometry(m_quads, 2);
+        m_meshDynamic->Render();
 
         // Swap buffers and poll events
         glfwSwapBuffers(m_window);
@@ -122,7 +120,7 @@ namespace Game {
         Utils::Logger::Log("Shutting down application...");
         // Clean up resources
 
-        m_mesh->Clear(); // Temporary for dev purposes
+        m_meshDynamic->Clear();
 
         glDeleteProgram(m_shaderProgram);
 

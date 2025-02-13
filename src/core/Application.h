@@ -5,7 +5,8 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 
-#include "../graphics/Mesh.h"
+#include "../graphics/MeshStatic.h"
+#include "../graphics/MeshDynamic.h"
 
 namespace Game {
 
@@ -21,7 +22,11 @@ private:
     void m_Render();
     void m_Shutdown();
 
-    std::unique_ptr<Graphics::Mesh> m_mesh;
+    // Temporary, for development purposes
+    std::unique_ptr<Graphics::MeshStatic> m_meshStatic;
+    std::unique_ptr<Graphics::MeshDynamic> m_meshDynamic;
+    Graphics::Quad m_quads[2];
+
 
     bool m_applicationShouldTerminate = false;
 
