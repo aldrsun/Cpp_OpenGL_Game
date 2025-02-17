@@ -1,26 +1,24 @@
-#ifndef APPLICATION_H
-#define APPLICATION_H
+#ifndef ENGINE_H
+#define ENGINE_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <memory>
 
+#include "Initialization.h"
 #include "../graphics/MeshStatic.h"
 #include "../graphics/MeshDynamic.h"
 
-namespace Game {
+namespace Engine {
 
-class Application {
+class Engine {
 public:
-    Application();
-    void Run();
+    Engine();
+    
+    void Render();
+    void Update();
+    void Shutdown();
 
 private:
     int m_Initialize();
-    int m_GenerateGameObjects();
-    void m_Update();
-    void m_Render();
-    void m_Shutdown();
 
     // Temporary, for development purposes
     std::unique_ptr<Graphics::MeshStatic> m_meshStatic;
@@ -34,6 +32,6 @@ private:
     GLFWwindow* m_window = nullptr;
 };
 
-} // Game
+} // namespace Engine
 
-#endif //APPLICATION_H
+#endif //ENGINE_H

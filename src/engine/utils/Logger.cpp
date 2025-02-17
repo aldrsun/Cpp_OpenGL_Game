@@ -1,7 +1,7 @@
 #include "Logger.h"
 
 
-namespace Utils::Logger {
+namespace Engine::Utils::Logger {
 
     void SetLogType(const LogType &log_type) {
         m_logType = log_type;
@@ -14,4 +14,4 @@ namespace Utils::Logger {
     void m_LogToFile(const char* message) {
         m_LogToConsole("[UNSUPPORTED LOG TYPE] ");
     }
-} // namespace Utils
+} // namespace Engine::Utils::Logger

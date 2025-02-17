@@ -6,7 +6,7 @@
 #include <sstream>
 #include <unordered_map>
 
-namespace Utils::Logger {
+namespace Engine::Utils::Logger {
     enum class LogType {
         Console,
         File,
@@ -59,6 +59,6 @@ namespace Utils::Logger {
 
     void m_LogToConsole(const char* message);
     void m_LogToFile(const char* message);
-} // Utils::Logger
+} // Engine::Utils::Logger
 
 #endif // LOGGER_H

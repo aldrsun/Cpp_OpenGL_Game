@@ -2,7 +2,7 @@
 
 #include "../utils/Logger.h"
 
-namespace Graphics {
+namespace Engine::Graphics {
     MeshDynamic::MeshDynamic(const GLsizei max_quad_count, const GLuint& shader_program) {
         m_shaderProgram = shader_program;
         m_transformLocation = glGetUniformLocation(shader_program, "transform");
@@ -61,4 +61,4 @@ namespace Graphics {
         glDeleteBuffers(1, &m_vbo);
         glDeleteBuffers(1, &m_ebo);
     }
-} // Graphics
+} // Engine::Graphics
