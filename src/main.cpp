@@ -1,5 +1,5 @@
-#include "core/Application.h"
-#include "utils/Logger.h"
+#include "./engine/core/Application.h"
+#include "./engine/utils/Logger.h"
 
 int main() {
     Game::Application app;
