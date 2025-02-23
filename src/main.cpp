@@ -1,9 +1,11 @@
-#include "engine/Application.h"
+#include "game/Game.h"
 #include "utils/Logger.h"
 
 int main() {
-    Game::Run();
 
-    Engine::Utils::Logger::Log("Application exiting");
-    return 0;
+    Game::Game *g = new Game::Game();
+    
+    g->Run();
+    
+    Utils::Logger::Log("Application exiting");
 }

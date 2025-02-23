@@ -16,7 +16,8 @@ add_executable(main
         src/graphics/Shader.cpp
         src/graphics/MeshStatic.cpp
         src/graphics/MeshDynamic.cpp
-        src/utils/Logger.cpp)
+        src/utils/Logger.cpp
+        src/game/Game.cpp)
 
 # Add include directory
 target_include_directories(main PRIVATE include)

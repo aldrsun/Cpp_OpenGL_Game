@@ -1,9 +1,11 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include <memory>
 
-#include "engine/Initialization.h"
 #include "graphics/MeshStatic.h"
 #include "graphics/MeshDynamic.h"
 
@@ -17,6 +19,7 @@ public:
     void Update();
     void Shutdown();
 
+    bool GetEngineShouldTerminate() const;
 private:
     int m_Initialize();
 
@@ -26,7 +29,7 @@ private:
     Graphics::Quad m_quads[2];
 
 
-    bool m_applicationShouldTerminate = false;
+    bool m_engineShouldTerminate = false;
 
     GLuint m_shaderProgram = 0;
     GLFWwindow* m_window = nullptr;

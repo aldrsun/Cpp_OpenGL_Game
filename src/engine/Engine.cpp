@@ -1,4 +1,6 @@
 #include "engine/Engine.h"
+#include "engine/Initialization.h"
+
 #include "graphics/Shader.h"
 #include "graphics/MeshStatic.h"
 #include "utils/Logger.h"
@@ -52,12 +54,12 @@ namespace Engine {
             }
         };
 
-        while (!m_applicationShouldTerminate) {
+        while (!m_engineShouldTerminate) {
             if (!glfwWindowShouldClose(m_window)) {
                 Update();
                 Render();
             } else {
-                m_applicationShouldTerminate = true;
+                m_engineShouldTerminate = true;
             }
         }
 
@@ -96,5 +98,9 @@ namespace Engine {
         glDeleteProgram(m_shaderProgram);
 
         glfwTerminate();
+    }
+
+    bool Engine::GetEngineShouldTerminate() const {
+        return m_engineShouldTerminate;
     }
 } // namespace Engine

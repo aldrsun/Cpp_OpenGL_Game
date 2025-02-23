@@ -1,6 +1,13 @@
 #include "game/Game.h"
 
-class Game {
+namespace Game {
 
+    Game::Game() {
 
-};
+    }
+
+    void Game::Run() {
+        AppRun();
+    }
+
+}
