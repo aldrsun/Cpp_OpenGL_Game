@@ -61,4 +61,13 @@ namespace Graphics {
         glDeleteBuffers(1, &m_vbo);
         glDeleteBuffers(1, &m_ebo);
     }
-} // Engine::Graphics
+
+    [[nodiscard]] const float* MeshDynamic::GetPosition() const {
+        return &m_position[0];
+    }
+
+    void MeshDynamic::SetPosition(const float &x, const float &y) {
+        m_position[0] = x;
+        m_position[1] = y;
+    }
+} // Graphics

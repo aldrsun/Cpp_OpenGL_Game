@@ -1,31 +1,31 @@
 #ifndef MESH_DYNAMIC_H
 #define MESH_DYNAMIC_H
+
 #include <GL/glew.h>
+#include "graphics/Mesh.h"
+
 #include <vector>
+
 
 namespace Graphics {
 
-struct Vertex {
-    float position[3];
-    float color[4];
-};
-
-struct Quad {
-    Vertex vertices[4];
-};
-
-class MeshDynamic {
+class MeshDynamic : public Mesh{
 public:
     explicit MeshDynamic(GLsizei max_quad_count, const GLuint& shader_program);
-    void UpdateGeometry(Quad *quads, GLsizei quad_count);
-    void Render() const;
-    void Clear();
+    void UpdateGeometry(Quad *quads, GLsizei quad_count) override;
+    void Render() const override;
+    void Clear() override;
+
+    [[nodiscard]] const float* GetPosition() const override;
+    void SetPosition(const float& x, const float& y) override;
 private:
     GLuint m_shaderProgram;   // TEMPORARY
     GLint m_transformLocation; // TEMPORARY
     GLuint m_vao = 0, m_vbo = 0, m_ebo;
     GLsizei m_maxQuadCount = 0;
     GLsizei m_quadCount = 0;
+
+    float m_position[2];
 };
 
 } // Graphics

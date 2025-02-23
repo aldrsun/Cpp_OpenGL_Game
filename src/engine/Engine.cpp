@@ -34,9 +34,6 @@ namespace Engine {
             Utils::Logger::Log("Shaders initialized");
         }
 
-
-        m_meshDynamic = std::make_unique<Graphics::MeshDynamic>(2, m_shaderProgram);
-
         m_quads[0] = {
             {
                 {{-0.75f, -0.25f, 0.0f} , {0.8f, 0.14f, 0.14f, 1.0f}},
@@ -53,6 +50,10 @@ namespace Engine {
                 {{0.25f, 0.15f, 0.0f} , {0.78f, 0.32f, 0.0f, 1.0f}},
             }
         };
+
+
+        m_renderer = std::move(std::make_unique<Renderer>(m_window));
+        m_renderer->AddMesh(Graphics::MeshType::MESH_DYNAMIC, 2, m_shaderProgram);
 
         while (!m_engineShouldTerminate) {
             if (!glfwWindowShouldClose(m_window)) {
@@ -76,24 +77,20 @@ namespace Engine {
             direction *= -1;
         }
 
+        m_renderer->UpdateMesh(0, m_quads, 2);
     }
 
     void Engine::Render() {
-        glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(m_shaderProgram);
+        m_renderer->Render();
 
-        m_meshDynamic->UpdateGeometry(m_quads, 2);
-        m_meshDynamic->Render();
-
-        glfwSwapBuffers(m_window);
         glfwPollEvents();
     }
 
     void Engine::Shutdown() {
         Utils::Logger::Log("Shutting down application...");
 
-        m_meshDynamic->Clear();
+        m_renderer->Clear();
 
         glDeleteProgram(m_shaderProgram);
 

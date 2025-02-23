@@ -6,8 +6,7 @@
 
 #include <memory>
 
-#include "graphics/MeshStatic.h"
-#include "graphics/MeshDynamic.h"
+#include "engine/Renderer.h"
 
 namespace Engine {
 
@@ -21,13 +20,11 @@ public:
 
     bool GetEngineShouldTerminate() const;
 private:
+    std::unique_ptr<Renderer> m_renderer;
+
     int m_Initialize();
 
-    // Temporary, for development purposes
-    std::unique_ptr<Graphics::MeshStatic> m_meshStatic;
-    std::unique_ptr<Graphics::MeshDynamic> m_meshDynamic;
     Graphics::Quad m_quads[2];
-
 
     bool m_engineShouldTerminate = false;
 

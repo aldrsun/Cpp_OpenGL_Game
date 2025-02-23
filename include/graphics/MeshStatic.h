@@ -3,16 +3,18 @@
 #include <GL/glew.h>
 #include <vector>
 
+#include "graphics/Mesh.h"
+
 namespace Graphics {
 
-class MeshStatic {
+class MeshStatic : public Mesh{
 public:
     explicit MeshStatic(const float position[2], const std::vector<std::vector<float>>& vertices_list, const GLuint& shader_program);
     MeshStatic(const float& x, const float& y, const float& width, const float& height, const GLuint& shader_program);
-    void Render() const;
-    void Clear();
-    [[nodiscard]] const float* GetPosition() const;
-    void SetPosition(const float& x, const float& y);
+    void Render() const override;
+    void Clear() override;
+    [[nodiscard]] const float* GetPosition() const override;
+    void SetPosition(const float& x, const float& y) override;
 private:
     GLuint m_shaderProgram;   // TEMPORARY
     GLint m_transformLocation; // TEMPORARY
