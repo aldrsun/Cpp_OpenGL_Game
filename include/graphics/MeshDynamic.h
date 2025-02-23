@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <vector>
 
-namespace Engine::Graphics {
+namespace Graphics {
 
 struct Vertex {
     float position[3];
@@ -28,6 +28,6 @@ private:
     GLsizei m_quadCount = 0;
 };
 
-} // Engine::Graphics
+} // Graphics
 
 #endif //MESH_DYNAMIC_H

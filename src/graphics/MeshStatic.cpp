@@ -2,7 +2,7 @@
 
 #include "utils/Logger.h"
 
-namespace Engine::Graphics {
+namespace Graphics {
     MeshStatic::MeshStatic(const float position[2], const std::vector<std::vector<float>> &vertices_list, const GLuint& shader_program) {
         m_shaderProgram = shader_program;
         m_transformLocation = glGetUniformLocation(shader_program, "transform");

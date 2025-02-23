@@ -1,7 +1,7 @@
 #include "utils/Logger.h"
 
 
-namespace Engine::Utils::Logger {
+namespace Utils::Logger {
 
     void SetLogType(const LogType &log_type) {
         m_logType = log_type;

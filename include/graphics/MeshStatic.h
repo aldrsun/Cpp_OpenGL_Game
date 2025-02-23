@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <vector>
 
-namespace Engine::Graphics {
+namespace Graphics {
 
 class MeshStatic {
 public:

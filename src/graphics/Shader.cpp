@@ -4,7 +4,7 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 
-namespace Engine::Shader {
+namespace Shader {
     // Function to read a shader file
     std::string readShaderFile(const char* filePath) {
         std::ifstream shaderFile(filePath);

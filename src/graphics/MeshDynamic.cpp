@@ -2,7 +2,7 @@
 
 #include "utils/Logger.h"
 
-namespace Engine::Graphics {
+namespace Graphics {
     MeshDynamic::MeshDynamic(const GLsizei max_quad_count, const GLuint& shader_program) {
         m_shaderProgram = shader_program;
         m_transformLocation = glGetUniformLocation(shader_program, "transform");

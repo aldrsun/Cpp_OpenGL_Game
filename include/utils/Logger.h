@@ -6,7 +6,7 @@
 #include <sstream>
 #include <unordered_map>
 
-namespace Engine::Utils::Logger {
+namespace Utils::Logger {
     enum class LogType {
         Console,
         File,
