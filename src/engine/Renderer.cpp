@@ -2,34 +2,52 @@
 
 namespace Engine {
 
-    Renderer::Renderer(GLFWwindow* window)
+    Renderer::Renderer(GLFWwindow* window, const GLuint shader_program)
     {
         m_window = window;
+        m_shaderProgram = shader_program;
+
+
+        m_transformLocation = glGetUniformLocation(m_shaderProgram, "Transformation");
     }
 
-    unsigned int Renderer::AddMesh(Graphics::MeshType mesh_type, GLsizei max_quad_count, const GLuint& shader_program)
+    unsigned int Renderer::AddMesh(Graphics::MeshType mesh_type)
     {
-        m_shaderProgram = shader_program;
         switch (mesh_type)
         {
-            case Graphics::MeshType::MESH_DYNAMIC:
-                std::unique_ptr<Graphics::Mesh> new_mesh_dynamic = std::make_unique<Graphics::MeshDynamic>(max_quad_count, shader_program);
-                unsigned int new_mesh_id = new_mesh_dynamic->GetID();
-                m_meshes.push_back(std::move(new_mesh_dynamic));
+            case Graphics::MeshType::MESH_STATIC:
+                std::unique_ptr<Graphics::Mesh> new_mesh_static = std::make_unique<Graphics::MeshStatic>();
+                unsigned int new_mesh_id = new_mesh_static->GetID();
+                m_meshes.push_back(std::move(new_mesh_static));
+
+
+
                 return new_mesh_id;
         }
 
         return 0;
     }
 
-    void Renderer::UpdateMesh(const unsigned int mesh_id, Graphics::Quad *quads, GLsizei quad_count )
+    void Renderer::UpdateMesh(const unsigned int mesh_id, const std::array<float, 3> position, const std::vector<Graphics::Vertex>& vertex_list)
+    {
+        for (const auto& mesh : m_meshes)
+        {
+            if (mesh->GetID() == mesh_id)
+            {
+                mesh->UpdateGeometry(position, vertex_list);
+                break;
+            }
+        }
+    }
+    
+    void Renderer::UpdateMeshPosition(const unsigned int mesh_id, std::array<float, 3> position)
     {
         for (const auto& mesh : m_meshes)
         {
             if (mesh->GetID() == mesh_id)
             {
 
-                mesh->UpdateGeometry(quads, quad_count);
+                mesh->SetPosition(position[0], position[1], position[2]);
 
                 break;
             }
@@ -42,7 +60,7 @@ namespace Engine {
 
         for (const auto& mesh : m_meshes)
         {
-            mesh->Render();
+            mesh->Render(m_transformLocation);
         }
         glfwSwapBuffers(m_window);
     }

@@ -3,17 +3,15 @@
 #include "utils/Logger.h"
 
 namespace Graphics {
-    MeshDynamic::MeshDynamic(const GLsizei max_quad_count, const GLuint& shader_program) {
-        m_shaderProgram = shader_program;
-        m_transformLocation = glGetUniformLocation(shader_program, "transform");
-        m_maxQuadCount = max_quad_count;
+    MeshDynamic::MeshDynamic(const GLsizei max_vertex_count) {
+        m_maxVertexCount = max_vertex_count;
 
         glGenVertexArrays(1, &m_vao);
         glBindVertexArray(m_vao);
 
         glGenBuffers(1, &m_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 4 * max_quad_count, nullptr, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 4 * max_vertex_count, nullptr, GL_DYNAMIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, position));
@@ -21,8 +19,8 @@ namespace Graphics {
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, color));
         
-        uint32_t indices[max_quad_count * 6];
-        for(int i = 0, v = 0; i < max_quad_count * 6; i += 6, v += 4)
+        uint32_t indices[max_vertex_count];
+        for(int i = 0, v = 0; i < max_vertex_count; i += 6, v += 4)
         {
             indices[i]      = 0 + v;
             indices[i + 1]  = 1 + v;
@@ -41,18 +39,17 @@ namespace Graphics {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    void MeshDynamic::UpdateGeometry(Quad *quads, GLsizei quad_count) {
-        m_quadCount = quad_count;
+    void MeshDynamic::UpdateGeometry(Vertex *vertices, GLsizei vertex_count) {
+        m_vertexCount = vertex_count;
         glBindVertexArray(m_vao);
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-        // We can improve this including some control over offset etc.
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Quad) * quad_count, quads);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex) * vertex_count, vertices);
         glBindVertexArray(0);
     }
 
-    void MeshDynamic::Render() const {
+    void MeshDynamic::Render(GLint transform_location) const {
         glBindVertexArray(m_vao);
-        glDrawElements(GL_TRIANGLES, m_quadCount * 6, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, m_vertexCount, GL_UNSIGNED_INT, nullptr);
         glBindVertexArray(0);
     }
 
@@ -66,8 +63,9 @@ namespace Graphics {
         return &m_position[0];
     }
 
-    void MeshDynamic::SetPosition(const float &x, const float &y) {
+    void MeshDynamic::SetPosition(const float x, const float y, const float z) {
         m_position[0] = x;
         m_position[1] = y;
+        m_position[2] = z;
     }
 } // Graphics

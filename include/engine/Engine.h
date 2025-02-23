@@ -13,20 +13,15 @@ namespace Engine {
 class Engine {
 public:
     Engine();
-    
-    void Render();
-    void Update();
+
     void Shutdown();
 
     bool GetEngineShouldTerminate() const;
+
+    std::unique_ptr<Renderer> renderer;
+
 private:
-    std::unique_ptr<Renderer> m_renderer;
-
     int m_Initialize();
-
-    Graphics::Quad m_quads[2];
-
-    bool m_engineShouldTerminate = false;
 
     GLuint m_shaderProgram = 0;
     GLFWwindow* m_window = nullptr;

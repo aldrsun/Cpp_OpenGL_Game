@@ -3,15 +3,14 @@
 
 #include <GL/glew.h>
 
+#include <vector>
+#include <array>
+
 namespace Graphics {
 
     struct Vertex {
         float position[3];
         float color[4];
-    };
-    
-    struct Quad {
-        Vertex vertices[4];
     };
 
     enum class MeshType {
@@ -23,16 +22,18 @@ namespace Graphics {
     public:
         Mesh();
     // TODO : DO NOT CREATE MESHES IN THEIR CONSTRUCTORS
-        virtual void Render() const = 0;
+        virtual void Render(GLint transform_location) const = 0;
         virtual void Clear() = 0;
-        virtual void UpdateGeometry(Quad *quads, GLsizei quad_count) {}; // TODO : TEMPORARY, WILL BE IMPROVED
+        virtual void UpdateGeometry(Vertex* vertices, GLsizei vertex_count) {};
         [[nodiscard]] virtual const float* GetPosition() const = 0;
-        virtual void SetPosition(const float& x, const float& y) = 0;
-        
+        virtual void SetPosition(const float x, const float y, const float z) = 0;
+
+        virtual void UpdateGeometry(const std::array<float, 3>& position, const std::vector<Vertex> &vertex_list) {}
+
         unsigned int GetID() const;
     private:
         unsigned int m_id;
-        void AssignID();
+        void m_AssignID();
     };
 
 }

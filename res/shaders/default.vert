@@ -4,10 +4,10 @@ layout (location = 1) in vec4 Color; // Vertex position
 
 out vec4 ColorData;
 
-uniform vec2 Transformation; // Transformation
+uniform vec3 Transformation; // Transformation
 
 void main()
 {
     ColorData = Color;
-    gl_Position = vec4(Position, 1.0); // Pass the vertex position to the fragment shader
+    gl_Position = vec4(Position + Transformation, 1.0); // Pass the vertex position to the fragment shader
 }

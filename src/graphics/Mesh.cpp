@@ -3,11 +3,11 @@
 namespace Graphics {
 
     Mesh::Mesh() {
-        AssignID();
+        m_AssignID();
     }
 
-    void Mesh::AssignID() {
-        unsigned int s_meshCount = 0;
+    void Mesh::m_AssignID() {
+        static unsigned int s_meshCount = 0;
         m_id = s_meshCount;
         s_meshCount ++;
     }

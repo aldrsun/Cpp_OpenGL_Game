@@ -23,7 +23,9 @@ add_executable(main
         
         src/utils/Logger.cpp
         
-        src/game/Game.cpp)
+        src/game/Game.cpp
+        
+        src/gameobjects/singleobjects/Triangular.cpp)
 
 # Add include directory
 target_include_directories(main PRIVATE include)

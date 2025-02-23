@@ -34,63 +34,14 @@ namespace Engine {
             Utils::Logger::Log("Shaders initialized");
         }
 
-        m_quads[0] = {
-            {
-                {{-0.75f, -0.25f, 0.0f} , {0.8f, 0.14f, 0.14f, 1.0f}},
-                {{-0.75f, 0.25f, 0.0f}  , {0.8f, 0.14f, 0.14f, 1.0f}},
-                {{-0.25f, 0.25f, 0.0f}  , {0.8f, 0.14f, 0.14f, 1.0f}},
-                {{-0.25f, -0.25f, 0.0f} , {0.8f, 0.14f, 0.14f, 1.0f}},
-            }
-        };
-        m_quads[1] = {
-            {
-                {{0.75f, 0.15f, 0.0f} , {0.78f, 0.32f, 0.0f, 1.0f}},
-                {{0.75f, 0.65f, 0.0f}  , {0.78f, 0.32f, 0.0f, 1.0f}},
-                {{0.25f, 0.65f, 0.0f}  , {0.78f, 0.32f, 0.0f, 1.0f}},
-                {{0.25f, 0.15f, 0.0f} , {0.78f, 0.32f, 0.0f, 1.0f}},
-            }
-        };
-
-
-        m_renderer = std::move(std::make_unique<Renderer>(m_window));
-        m_renderer->AddMesh(Graphics::MeshType::MESH_DYNAMIC, 2, m_shaderProgram);
-
-        while (!m_engineShouldTerminate) {
-            if (!glfwWindowShouldClose(m_window)) {
-                Update();
-                Render();
-            } else {
-                m_engineShouldTerminate = true;
-            }
-        }
-
-        Shutdown();
+        renderer = std::move(std::make_unique<Renderer>(m_window, m_shaderProgram));
         return 0;
-    }
-
-    void Engine::Update() {
-        static int direction = 1;
-        for (int i = 0; i < 4; i ++) {
-            m_quads[0].vertices[i].position[0] += 0.01 * direction;
-        }
-        if(m_quads[0].vertices[0].position[0] < -1 || m_quads[0].vertices[2].position[0] > 1) {
-            direction *= -1;
-        }
-
-        m_renderer->UpdateMesh(0, m_quads, 2);
-    }
-
-    void Engine::Render() {
-
-        m_renderer->Render();
-
-        glfwPollEvents();
     }
 
     void Engine::Shutdown() {
         Utils::Logger::Log("Shutting down application...");
 
-        m_renderer->Clear();
+        renderer->Clear();
 
         glDeleteProgram(m_shaderProgram);
 
@@ -98,6 +49,6 @@ namespace Engine {
     }
 
     bool Engine::GetEngineShouldTerminate() const {
-        return m_engineShouldTerminate;
+        return glfwWindowShouldClose(m_window);
     }
 } // namespace Engine
