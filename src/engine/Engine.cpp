@@ -1,7 +1,7 @@
-#include "Engine.h"
-#include "../graphics/Shader.h"
-#include "../graphics/MeshStatic.h"
-#include "../utils/Logger.h"
+#include "engine/Engine.h"
+#include "graphics/Shader.h"
+#include "graphics/MeshStatic.h"
+#include "utils/Logger.h"
 
 namespace Engine {
     Engine::Engine() {
@@ -62,6 +62,7 @@ namespace Engine {
         }
 
         Shutdown();
+        return 0;
     }
 
     void Engine::Update() {
@@ -95,6 +96,5 @@ namespace Engine {
         glDeleteProgram(m_shaderProgram);
 
         glfwTerminate();
-        m_applicationShouldTerminate = true;
     }
 } // namespace Engine

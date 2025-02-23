@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "Initialization.h"
-#include "../graphics/MeshStatic.h"
-#include "../graphics/MeshDynamic.h"
+#include "engine/Initialization.h"
+#include "graphics/MeshStatic.h"
+#include "graphics/MeshDynamic.h"
 
 namespace Engine {
 

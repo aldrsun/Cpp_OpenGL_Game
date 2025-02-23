@@ -1,6 +1,6 @@
-#include "MeshStatic.h"
+#include "graphics/MeshStatic.h"
 
-#include "../utils/Logger.h"
+#include "utils/Logger.h"
 
 namespace Engine::Graphics {
     MeshStatic::MeshStatic(const float position[2], const std::vector<std::vector<float>> &vertices_list, const GLuint& shader_program) {

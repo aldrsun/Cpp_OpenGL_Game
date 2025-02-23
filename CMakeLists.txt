@@ -8,21 +8,18 @@ find_package(glfw3 REQUIRED)
 find_package(GLEW REQUIRED)
 
 # Add executable
-add_executable(main src/main.cpp
-        src/engine/core/Engine.cpp
-        src/engine/core/Engine.h
-        src/engine/core/Initialization.cpp
-        src/engine/core/Initialization.h
-        src/engine/graphics/Shader.cpp
-        src/engine/graphics/Shader.h
-        src/engine/graphics/MeshStatic.cpp
-        src/engine/graphics/MeshStatic.h
-        src/engine/graphics/MeshDynamic.cpp
-        src/engine/graphics/MeshDynamic.h
-        src/engine/utils/Logger.cpp
-        src/engine/utils/Logger.h
-        src/game/Application.cpp
-        src/game/Application.h)
+add_executable(main
+        src/main.cpp
+        src/engine/Engine.cpp
+        src/engine/Application.cpp
+        src/engine/Initialization.cpp
+        src/graphics/Shader.cpp
+        src/graphics/MeshStatic.cpp
+        src/graphics/MeshDynamic.cpp
+        src/utils/Logger.cpp)
+
+# Add include directory
+target_include_directories(main PRIVATE include)
 
 # Link libraries
 target_link_libraries(main OpenGL::GL glfw GLEW::GLEW)

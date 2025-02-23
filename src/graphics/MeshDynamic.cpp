@@ -1,6 +1,6 @@
-#include "MeshDynamic.h"
+#include "graphics/MeshDynamic.h"
 
-#include "../utils/Logger.h"
+#include "utils/Logger.h"
 
 namespace Engine::Graphics {
     MeshDynamic::MeshDynamic(const GLsizei max_quad_count, const GLuint& shader_program) {

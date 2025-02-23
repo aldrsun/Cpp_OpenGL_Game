@@ -1,6 +1,6 @@
-#include "Initialization.h"
-#include "../utils/Logger.h"
-#include "../graphics/Shader.h"
+#include "engine/Initialization.h"
+#include "utils/Logger.h"
+#include "graphics/Shader.h"
 
 namespace Engine {
     int m_glfwInit(GLFWwindow **window) {
