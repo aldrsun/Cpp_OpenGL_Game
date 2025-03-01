@@ -15,6 +15,7 @@ add_executable(main
         src/engine/Application.cpp
         src/engine/Initialization.cpp
         src/engine/Renderer.cpp
+	src/engine/EventManager.cpp
 
         src/graphics/Shader.cpp
         src/graphics/Mesh.cpp

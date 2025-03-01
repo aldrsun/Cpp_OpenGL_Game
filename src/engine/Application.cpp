@@ -7,6 +7,8 @@
 #include <chrono>
 #include "utils/Logger.h"
 
+#include "engine/EventManager.h"
+
 namespace Engine {
 
     void Application::AppRun() {
@@ -46,11 +48,26 @@ namespace Engine {
         auto start_time = std::chrono::high_resolution_clock::now(); // Start time
         int frame_count = 0;
 
+        int collision_count = 0;
+
+        EventDispatcher::GetInstance().Subscribe(EventType::CollisionEvent, [](const Event& event) {
+            const CollisionEvent& collision_event = static_cast<const CollisionEvent&>(event);
+            Utils::Logger::Log("Collision! : ", collision_event.count);
+        });
+
         while(!m_applicationShouldTerminate)
         {        
             auto current_time = std::chrono::high_resolution_clock::now();  // Current time
             std::chrono::duration<float> elapsed = current_time - start_time;  // Time elapsed in seconds
             frame_count ++;
+
+            EventDispatcher::GetInstance().Dispatch();
+
+
+
+            if (x_pos < -0.75 || x_pos > 0.75) {
+                EventDispatcher::GetInstance().QueueEvent(std::make_unique<CollisionEvent>(collision_count ++), EventType::CollisionEvent);
+            }
 
             if (x_pos < -0.75) {
                 direction = 1;
