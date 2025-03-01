@@ -2,13 +2,16 @@
 
 #include "engine/Engine.h"
 
-#include "gameobjects/singleobjects/Triangular.h"
+#include "gameobjects/Rectangle.h"
+
+#include <chrono>
+#include "utils/Logger.h"
 
 namespace Engine {
 
     void Application::AppRun() {
 
-        GameObjects::Triangular quad1, quad2;
+        GameObjects::Rectangle quad1, quad2;
 
         std::vector<Graphics::Vertex> quad1_data = {
             {
@@ -39,9 +42,16 @@ namespace Engine {
         float x_pos = -0.5f;
         float direction = 1;
         float speed = 0.01;
+        
+        auto start_time = std::chrono::high_resolution_clock::now(); // Start time
+        int frame_count = 0;
 
         while(!m_applicationShouldTerminate)
-        {
+        {        
+            auto current_time = std::chrono::high_resolution_clock::now();  // Current time
+            std::chrono::duration<float> elapsed = current_time - start_time;  // Time elapsed in seconds
+            frame_count ++;
+
             if (x_pos < -0.75) {
                 direction = 1;
             }
@@ -56,6 +66,16 @@ namespace Engine {
 
             glfwPollEvents();
             m_applicationShouldTerminate = GetEngineShouldTerminate();
+
+            if (elapsed.count() >= 1.0f) {
+                float fps = frame_count / elapsed.count();
+                Utils::Logger::Log("FPS: ", fps);
+    
+                // Reset for next second
+                frame_count = 0;
+                start_time = std::chrono::high_resolution_clock::now();
+            }
+    
         }
 
         Shutdown();

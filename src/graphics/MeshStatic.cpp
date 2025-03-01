@@ -6,6 +6,13 @@ namespace Graphics {
     void MeshStatic::UpdateGeometry(const std::array<float, 3>& position, const std::vector<Vertex>& vertex_list){
         SetPosition(position[0], position[1], position[2]);
 
+        if (m_vao != 0)
+        {
+            glDeleteVertexArrays(1, &m_vao);
+            glDeleteBuffers(1, &m_vbo);
+            glDeleteBuffers(1, &m_ebo);
+        }
+
         uint32_t indices[6];
         for(int i = 0, v = 0; i < vertex_list.size(); i += 6, v += 4)
         {
@@ -48,8 +55,11 @@ namespace Graphics {
 
     void MeshStatic::Clear() {
         glDeleteVertexArrays(1, &m_vao);
+        m_vao = 0;
         glDeleteBuffers(1, &m_vbo);
+        m_vbo = 0;
         glDeleteBuffers(1, &m_ebo);
+        m_ebo = 0;
     }
 
     [[nodiscard]] const float* MeshStatic::GetPosition() const {

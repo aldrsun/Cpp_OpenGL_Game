@@ -1,5 +1,5 @@
-#ifndef TRIANGULAR_H
-#define TRIANGULAR_H
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
 
 #include <vector>
 #include <array>
@@ -7,9 +7,9 @@
 
 namespace GameObjects {
     // TODO : WORK ON THESE
-    class Triangular {
+    class Rectangle {
         public:
-            Triangular();
+            Rectangle();
 
             unsigned int GetID() const;
             unsigned int GetMeshID() const;
@@ -21,4 +21,4 @@ namespace GameObjects {
     };
 } // namespace GameObjects
 
-#endif // TRIANGULAR_H
+#endif // RECTANGLE_H

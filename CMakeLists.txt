@@ -25,7 +25,7 @@ add_executable(main
         
         src/game/Game.cpp
         
-        src/gameobjects/singleobjects/Triangular.cpp)
+	src/gameobjects/Rectangle.cpp)
 
 # Add include directory
 target_include_directories(main PRIVATE include)
