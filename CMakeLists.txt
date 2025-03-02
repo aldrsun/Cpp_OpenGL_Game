@@ -29,7 +29,7 @@ add_executable(main
 	src/gameobjects/Rectangle.cpp)
 
 # Add include directory
-target_include_directories(main PRIVATE include)
+target_include_directories(main PRIVATE include vendor)
 
 # Link libraries
-target_link_libraries(main OpenGL::GL glfw GLEW::GLEW)
+target_link_libraries(main OpenGL::GL glfw GLEW::GLEW ${CMAKE_CURRENT_SOURCE_DIR}/lib/Linux/libsoil2.a)
