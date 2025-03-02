@@ -4,9 +4,9 @@
 
 namespace Engine {
 
-    int m_glfwInit(GLFWwindow **window);
-    int m_glewInit();
-    int m_shaderInit(GLuint &shader_program);
+    int m_GLFWInit(GLFWwindow **window);
+    int m_GLEWInit();
+    int m_ShaderInit(GLuint &shader_program, const char* vertex_shader_source, const char* fragment_shader_source);
     
 
 } // namespace Engine

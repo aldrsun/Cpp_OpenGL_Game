@@ -5,9 +5,9 @@
 #include <GL/glew.h>
 
 namespace Shader {
-    std::string readShaderFile(const char* filePath);
-    GLuint compileShader(GLenum shaderType, const char* shaderSource);
-    GLuint createShaderProgram(const char* vertexShaderSource, const char* fragmentShaderSource);
+    std::string ReadShaderFile(const char* file_path);
+    GLuint CompileShader(GLenum shader_type, const char* shader_source);
+    GLuint CreateShaderProgram(const char* vertex_shader_source, const char* fragment_shader_source);
 } // namespace Shader
 
 

@@ -1,71 +1,65 @@
 #include "graphics/Shader.h"
 #include <fstream>
 #include <sstream>
-#include <iostream>
+#include "utils/Logger.h"
 #include <GLFW/glfw3.h>
 
 namespace Shader {
-    // Function to read a shader file
-    std::string readShaderFile(const char* filePath) {
-        std::ifstream shaderFile(filePath);
-        if (!shaderFile.is_open()) {
-            std::cerr << "Failed to open shader file: " << filePath << std::endl;
+    std::string ReadShaderFile(const char* file_path) {
+        std::ifstream shader_file(file_path);
+        if (!shader_file.is_open()) {
+            Utils::Logger::Log(Utils::Logger::LogLevel::Error, "Failed to open shader file: ", file_path);
             return "";
         }
         std::stringstream shaderStream;
-        shaderStream << shaderFile.rdbuf();
-        shaderFile.close();
+        shaderStream << shader_file.rdbuf();
+        shader_file.close();
         return shaderStream.str();
     }
 
-    // Function to compile a shader
-    GLuint compileShader(GLenum shaderType, const char* shaderSource) {
-        GLuint shader = glCreateShader(shaderType);
-        glShaderSource(shader, 1, &shaderSource, nullptr);
+    GLuint CompileShader(GLenum shader_type, const char* shader_source) {
+        GLuint shader = glCreateShader(shader_type);
+        glShaderSource(shader, 1, &shader_source, nullptr);
         glCompileShader(shader);
 
-        // Check for compilation errors
         GLint success;
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (!success) {
             char infoLog[512];
             glGetShaderInfoLog(shader, 512, nullptr, infoLog);
-            std::cerr << "Shader compilation failed:\n" << infoLog << std::endl;
+            Utils::Logger::Log(Utils::Logger::LogLevel::Error, "Shader compilation failed:\n", infoLog);
             return 0;
         }
         return shader;
     }
+        
+    GLuint CreateShaderProgram(const char* vertex_shader_path, const char* fragment_shader_path) {
+        std::string vertex_shader_source = Shader::ReadShaderFile(vertex_shader_path);
+        std::string fragment_shader_source = Shader::ReadShaderFile(fragment_shader_path);
+        
+        GLuint vertex_shader = CompileShader(GL_VERTEX_SHADER, vertex_shader_source.c_str());
+        if (vertex_shader == 0) return 0;
 
-    // Function to create a shader program
-    GLuint createShaderProgram(const char* vertexShaderSource, const char* fragmentShaderSource) {
-        // Compile the vertex shader
-        GLuint vertexShader = compileShader(GL_VERTEX_SHADER, vertexShaderSource);
-        if (vertexShader == 0) return 0;
+        GLuint fragment_shader = CompileShader(GL_FRAGMENT_SHADER, fragment_shader_source.c_str());
+        if (fragment_shader == 0) return 0;
 
-        // Compile the fragment shader
-        GLuint fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-        if (fragmentShader == 0) return 0;
+        GLuint shader_program = glCreateProgram();
+        glAttachShader(shader_program, vertex_shader);
+        glAttachShader(shader_program, fragment_shader);
+        glLinkProgram(shader_program);
 
-        // Link the shaders into a program
-        GLuint shaderProgram = glCreateProgram();
-        glAttachShader(shaderProgram, vertexShader);
-        glAttachShader(shaderProgram, fragmentShader);
-        glLinkProgram(shaderProgram);
-
-        // Check for linking errors
         GLint success;
-        glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+        glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
         if (!success) {
             char infoLog[512];
-            glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
-            std::cerr << "Shader program linking failed:\n" << infoLog << std::endl;
+            glGetProgramInfoLog(shader_program, 512, nullptr, infoLog);
+            Utils::Logger::Log("Shader program linking failed:\n", infoLog);
             return 0;
         }
 
-        // Clean up shaders (they are no longer needed after linking)
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
+        glDeleteShader(vertex_shader);
+        glDeleteShader(fragment_shader);
 
-        return shaderProgram;
+        return shader_program;
     }
 } // namespace Shader

@@ -3,7 +3,7 @@
 #include "graphics/Shader.h"
 
 namespace Engine {
-    int m_glfwInit(GLFWwindow **window) {
+    int m_GLFWInit(GLFWwindow **window) {
         if (!glfwInit()) {
             Utils::Logger::Log("glfwInit() failed.");
             return -1;
@@ -20,20 +20,15 @@ namespace Engine {
         return 0;
     }
 
-    int m_glewInit() {
+    int m_GLEWInit() {
         if (glewInit() != GLEW_OK) {
             return -1;
         }
         return 0;
     }
 
-    int m_shaderInit(GLuint &shader_program) {
-        std::string vertex_shader_source = Shader::readShaderFile("../res/shaders/default.vert");
-        std::string fragment_shader_source = Shader::readShaderFile("../res/shaders/default.frag");
-        if (vertex_shader_source.empty() || fragment_shader_source.empty()) {
-            return -1;
-        }
-        shader_program = Shader::createShaderProgram(vertex_shader_source.c_str(), fragment_shader_source.c_str());
+    int m_ShaderInit(GLuint &shader_program, const char* vertex_shader_path, const char* fragment_shader_path) {
+        shader_program = Shader::CreateShaderProgram(vertex_shader_path, fragment_shader_path);
         if (shader_program == 0) {
             return -1;
         }
