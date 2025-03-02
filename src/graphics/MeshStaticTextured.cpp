@@ -1,9 +1,10 @@
-#include "graphics/MeshStatic.h"
+#include "graphics/MeshStaticTextured.h"
 
 #include "utils/Logger.h"
 
 namespace Graphics {
-    void MeshStatic::UpdateGeometry(const std::array<float, 3>& position, const std::vector<VertexColored>& vertex_list){
+    void MeshStaticTextured::UpdateGeometry(const std::array<float, 3>& position, const std::vector<VertexTextured>& vertex_list, GLuint texture_id){
+        m_textureID = texture_id;
         SetPosition(position[0], position[1], position[2]);
 
         if (m_vao != 0)
@@ -30,13 +31,13 @@ namespace Graphics {
         glBindVertexArray(m_vao);
 
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-        glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeof(VertexColored) * vertex_list.size()), &vertex_list[0], GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeof(VertexTextured) * vertex_list.size()), &vertex_list[0], GL_STATIC_DRAW);
         
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexColored), (const void*)offsetof(VertexColored, position));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexTextured), (const void*)offsetof(VertexTextured, position));
 
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexColored), (const void*)offsetof(VertexColored, color));
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(VertexTextured), (const void*)offsetof(VertexTextured, textureCoord));
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
@@ -46,14 +47,14 @@ namespace Graphics {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    void MeshStatic::Render(GLint transform_location) const {
+    void MeshStaticTextured::Render(GLint transform_location) const {
         glUniform3f(transform_location, m_position[0], m_position[1], m_position[2]);
         glBindVertexArray(m_vao);
         glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, nullptr);
         glBindVertexArray(0);
     }
 
-    void MeshStatic::Clear() {
+    void MeshStaticTextured::Clear() {
         glDeleteVertexArrays(1, &m_vao);
         m_vao = 0;
         glDeleteBuffers(1, &m_vbo);
@@ -62,11 +63,11 @@ namespace Graphics {
         m_ebo = 0;
     }
 
-    [[nodiscard]] const float* MeshStatic::GetPosition() const {
+    [[nodiscard]] const float* MeshStaticTextured::GetPosition() const {
         return &m_position[0];
     }
 
-    void MeshStatic::SetPosition(const float x, const float y, const float z) {
+    void MeshStaticTextured::SetPosition(const float x, const float y, const float z) {
         m_position[0] = x;
         m_position[1] = y;
         m_position[2] = z;

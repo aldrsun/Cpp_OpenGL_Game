@@ -12,7 +12,7 @@ namespace Graphics {
 class MeshDynamic : public Mesh{
 public:
     explicit MeshDynamic(GLsizei max_quad_count);
-    void UpdateGeometry(Vertex *vertices, GLsizei vertex_count) override;
+    void UpdateGeometry(VertexColored *vertices, GLsizei vertex_count) override;
     void Render(GLint transform_location) const override;
     void Clear() override;
 

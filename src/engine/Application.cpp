@@ -13,33 +13,54 @@ namespace Engine {
 
     void Application::AppRun() {
 
-        GameObjects::Rectangle quad1, quad2;
+        GameObjects::Rectangle quad1c, quad2c;
+        GameObjects::Rectangle quad1t, quad2t;
 
-        std::vector<Graphics::Vertex> quad1_data = {
+        std::vector<Graphics::VertexColored> quad1c_data = {
             {
-                {{-0.25f, -0.25f, 0.0f} , {0.8f, 0.14f, 0.14f, 1.0f}},
-                {{-0.25f, 0.25f, 0.0f}  , {0.8f, 0.14f, 0.14f, 1.0f}},
-                {{0.25f, 0.25f, 0.0f}  , {0.8f, 0.14f, 0.14f, 1.0f}},
-                {{0.25f, -0.25f, 0.0f} , {0.8f, 0.14f, 0.14f, 1.0f}},
+                {{-0.45f, -0.45f, 0.0f} , {0.8f, 0.14f, 0.14f, 1.0f}},
+                {{-0.45f, 0.05f, 0.0f}  , {0.8f, 0.14f, 0.14f, 1.0f}},
+                {{0.05f, 0.05f, 0.0f}  , {0.8f, 0.14f, 0.14f, 1.0f}},
+                {{0.05f, -0.45f, 0.0f} , {0.8f, 0.14f, 0.14f, 1.0f}},
             }
         };
-        std::vector<Graphics::Vertex> quad2_data = {
+        std::vector<Graphics::VertexColored> quad2c_data = {
             {
-                {{0.75f, 0.15f, 0.0f} , {0.78f, 0.32f, 0.0f, 1.0f}},
-                {{0.75f, 0.65f, 0.0f}  , {0.78f, 0.32f, 0.0f, 1.0f}},
-                {{0.25f, 0.65f, 0.0f}  , {0.78f, 0.32f, 0.0f, 1.0f}},
-                {{0.25f, 0.15f, 0.0f} , {0.78f, 0.32f, 0.0f, 1.0f}},
+                {{0.95f, -0.15f, 0.0f} , {0.78f, 0.32f, 0.0f, 1.0f}},
+                {{0.95f, -0.65f, 0.0f}  , {0.78f, 0.32f, 0.0f, 1.0f}},
+                {{0.45f, -0.65f, 0.0f}  , {0.78f, 0.32f, 0.0f, 1.0f}},
+                {{0.45f, -0.15f, 0.0f} , {0.78f, 0.32f, 0.0f, 1.0f}},
             }
         };
 
 
-        quad1.SetMeshID(renderer->AddMesh(Graphics::MeshType::MESH_STATIC));
-        quad2.SetMeshID(renderer->AddMesh(Graphics::MeshType::MESH_STATIC));
+        std::vector<Graphics::VertexTextured> quad1t_data = {
+            {
+                {{-0.25f, -0.25f, 0.0f} , {0.0f, 0.0f}},
+                {{ 0.25f, -0.25f, 0.0f} , {1.0f, 0.0f}},
+                {{ 0.25f,  0.25f, 0.0f} , {1.0f, 1.0f}},
+                {{-0.25f,  0.25f, 0.0f} , {0.0f, 1.0f}},
+            }
+        };
+        std::vector<Graphics::VertexTextured> quad2t_data = {
+            {
+                {{0.25f, 0.15f, 0.0f} , {0.0f, 0.0f}},
+                {{0.75f, 0.15f, 0.0f} , {1.0f, 0.0f}},
+                {{0.75f, 0.65f, 0.0f} , {1.0f, 1.0f}},
+                {{0.25f, 0.65f, 0.0f} , {0.0f, 1.0f}},
+            }
+        };
 
 
-        renderer->UpdateMesh(quad1.GetMeshID(), {0.0f, 0.0f, 0.0f}, quad1_data);
-        renderer->UpdateMesh(quad2.GetMeshID(), {0.0f, 0.0f, 0.0f}, quad2_data);
+        quad1t.SetMeshID(renderer->AddMesh(Graphics::MeshType::MESH_STATIC_TEXTURED));
+        quad2t.SetMeshID(renderer->AddMesh(Graphics::MeshType::MESH_STATIC_TEXTURED));
+        renderer->UpdateMesh(quad1t.GetMeshID(), {0.0f, 0.0f, 0.0f}, quad1t_data, 1);
+        renderer->UpdateMesh(quad2t.GetMeshID(), {0.0f, 0.0f, 0.0f}, quad2t_data, 1);
 
+        quad1c.SetMeshID(renderer->AddMesh(Graphics::MeshType::MESH_STATIC));
+        quad2c.SetMeshID(renderer->AddMesh(Graphics::MeshType::MESH_STATIC));
+        renderer->UpdateMesh(quad1c.GetMeshID(), {0.0f, 0.0f, 0.0f}, quad1c_data);
+        renderer->UpdateMesh(quad2c.GetMeshID(), {0.0f, 0.0f, 0.0f}, quad2c_data);
 
         float x_pos = -0.5f;
         float direction = 1;
@@ -76,7 +97,7 @@ namespace Engine {
                 direction = -1;
             }
             x_pos += direction * speed;
-            renderer->UpdateMeshPosition(quad1.GetID(), {x_pos, 0.0f, 0.0f});
+            renderer->UpdateMeshPosition(quad1t.GetMeshID(), {x_pos, 0.0f, 0.0f});
 
 
             renderer->Render();

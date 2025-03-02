@@ -23,7 +23,8 @@ public:
 private:
     int m_Initialize();
 
-    GLuint m_shaderProgram = 0;
+    GLuint m_shaderColored = 0;
+    GLuint m_shaderTextured = 0;
     GLFWwindow* m_window = nullptr;
 };
 

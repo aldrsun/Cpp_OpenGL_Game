@@ -11,13 +11,13 @@ namespace Graphics {
 
         glGenBuffers(1, &m_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 4 * max_vertex_count, nullptr, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(VertexColored) * 4 * max_vertex_count, nullptr, GL_DYNAMIC_DRAW);
 
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, position));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexColored), (const void*)offsetof(VertexColored, position));
 
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, color));
+        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexColored), (const void*)offsetof(VertexColored, color));
         
         uint32_t indices[max_vertex_count];
         for(int i = 0, v = 0; i < max_vertex_count; i += 6, v += 4)
@@ -39,11 +39,11 @@ namespace Graphics {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    void MeshDynamic::UpdateGeometry(Vertex *vertices, GLsizei vertex_count) {
+    void MeshDynamic::UpdateGeometry(VertexColored *vertices, GLsizei vertex_count) {
         m_vertexCount = vertex_count;
         glBindVertexArray(m_vao);
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex) * vertex_count, vertices);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexColored) * vertex_count, vertices);
         glBindVertexArray(0);
     }
 

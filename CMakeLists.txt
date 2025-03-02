@@ -21,7 +21,8 @@ add_executable(main
         src/graphics/Mesh.cpp
         src/graphics/MeshStatic.cpp
         src/graphics/MeshDynamic.cpp
-        
+       	src/graphics/MeshStaticTextured.cpp
+
         src/utils/Logger.cpp
         
         src/game/Game.cpp
