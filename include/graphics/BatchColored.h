@@ -7,7 +7,7 @@ namespace Graphics {
     
     class BatchColored : public Batch {
     public:
-        BatchColored(GLuint shader_program);
+        BatchColored();
         ~BatchColored();
     
         void SubmitMesh(const Mesh& mesh) override;
@@ -20,7 +20,6 @@ namespace Graphics {
     
     private:
         GLuint m_vao, m_vbo, m_ebo, m_colorbo;
-        GLuint m_shaderProgram;
         bool m_isEmpty = true;
         bool m_isChanged = false;
 

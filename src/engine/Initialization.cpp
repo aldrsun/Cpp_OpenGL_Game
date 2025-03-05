@@ -3,6 +3,7 @@
 #include "graphics/Shader.h"
 
 namespace Engine {
+    
     int m_GLFWInit(GLFWwindow **window) {
         if (!glfwInit()) {
             Utils::Logger::Log("glfwInit() failed.");
@@ -34,4 +35,5 @@ namespace Engine {
         }
         return 0;
     }
+    
 }

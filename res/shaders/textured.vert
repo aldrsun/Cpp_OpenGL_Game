@@ -4,9 +4,9 @@ layout(location = 1) in vec2 aTexCoord;
 
 out vec2 vTexCoord;
 
-uniform vec3 Transformation;
+uniform mat4 u_Transformation;
 
 void main() {
-    gl_Position = vec4(/*Transformation + */aPosition, 1.0);
+    gl_Position = u_Transformation * vec4(aPosition, 1.0);
     vTexCoord = aTexCoord;
 }

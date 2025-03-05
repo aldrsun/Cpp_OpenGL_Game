@@ -3,16 +3,15 @@
 #include "utils/Logger.h"
 
 namespace Graphics {
-    BatchTextured::BatchTextured(GLuint texture_id, GLuint shader_program) {
+    BatchTextured::BatchTextured(GLuint texture_id) {
         glGenVertexArrays(1, &m_vao);
         glGenBuffers(1, &m_vbo);
         glGenBuffers(1, &m_ebo);
-	glGenBuffers(1, &m_uvbo);
+        glGenBuffers(1, &m_uvbo);
 
         m_textureID = texture_id;
-        m_shaderProgram = shader_program;
 
-	Utils::Logger::Log("BatchTextured Created With Texture ID", m_textureID, "and Shader Program", m_shaderProgram);
+        Utils::Logger::Log("BatchTextured Created With Texture ID", m_textureID);
     }
 
     BatchTextured::~BatchTextured() {
@@ -56,14 +55,14 @@ namespace Graphics {
         glBindVertexArray(0);
 
         glActiveTexture(GL_TEXTURE0);
+
+        m_isEmpty = false;
     }
 
     void BatchTextured::Render() const {
         if (m_isEmpty)
             return;
- 
-        glUseProgram(m_shaderProgram);
-        
+
         glBindVertexArray(m_vao);
         glBindTexture(GL_TEXTURE_2D, m_textureID);
         glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);

@@ -2,12 +2,11 @@
 
 namespace Graphics {
 
-    BatchColored::BatchColored(GLuint shader_program) {
+    BatchColored::BatchColored() {
         glGenVertexArrays(1, &m_vao);
         glGenBuffers(1, &m_vbo);
         glGenBuffers(1, &m_colorbo);
         glGenBuffers(1, &m_ebo);
-        m_shaderProgram = shader_program;
     }
 
     BatchColored::~BatchColored() {
@@ -55,7 +54,6 @@ namespace Graphics {
 
     void BatchColored::Render() const {
         if (!m_isEmpty) {
-            glUseProgram(m_shaderProgram);
             glBindVertexArray(m_vao);
 
             glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);

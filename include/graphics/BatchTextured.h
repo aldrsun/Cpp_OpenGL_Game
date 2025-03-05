@@ -8,7 +8,7 @@ namespace Graphics {
 
     class BatchTextured : public Batch {
     public:
-        BatchTextured(GLuint texture_id, GLuint shader_program);
+        BatchTextured(GLuint texture_id);
     
         ~BatchTextured();
     
@@ -21,7 +21,6 @@ namespace Graphics {
     
     private:
         GLuint m_vao, m_vbo, m_ebo, m_uvbo;
-        GLuint m_shaderProgram;
         GLuint m_textureID;
         bool m_isEmpty = true;
         bool m_isChanged = false;

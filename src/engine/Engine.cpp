@@ -1,6 +1,8 @@
 #include "engine/Engine.h"
 #include "engine/Initialization.h"
 
+#include "gameobjects/Camera.h"
+
 #include "graphics/Shader.h"
 #include "utils/Logger.h"
 
@@ -39,7 +41,9 @@ namespace Engine {
             Utils::Logger::Log("Textured Mesh Shaders initialized", m_shaderTextured);
         }
 
-        renderer = std::move(std::make_unique<Renderer>(1 /*TEMP TEXTURE ID, TODO.*/, m_shaderColored, m_shaderTextured));
+        std::shared_ptr<GameObjects::Camera> camera = std::make_shared<GameObjects::Camera>(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+
+        renderer = std::move(std::make_unique<Renderer>(1 /*TEMP TEXTURE ID, TODO.*/, m_shaderColored, m_shaderTextured, camera));
         return 0;
     }
 
