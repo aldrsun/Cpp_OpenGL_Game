@@ -9,5 +9,5 @@ uniform vec3 Transformation; // Transformation
 void main()
 {
     ColorData = Color;
-    gl_Position = vec4(Position + Transformation, 1.0); // Pass the vertex position to the fragment shader
+    gl_Position = vec4(Position/* + Transformation*/, 1.0); // Pass the vertex position to the fragment shader
 }

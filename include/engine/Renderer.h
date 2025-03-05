@@ -5,35 +5,36 @@
 #include <GLFW/glfw3.h>
 
 #include "graphics/Mesh.h"
-#include "graphics/MeshDynamic.h"
-#include "graphics/MeshStatic.h"
-#include "graphics/MeshStaticTextured.h"
+#include "graphics/Texture.h"
+#include "graphics/BatchColored.h"
+#include "graphics/BatchTextured.h"
 
+#include <map>
 #include <vector>
 #include <memory>
 
 namespace Engine {
 
+    using namespace Graphics;
+
     class Renderer {
-        public:
-            Renderer(GLFWwindow* window, const GLuint shader_colored, const GLuint shader_textured);
+    public:
+        Renderer(GLuint texture_id, GLuint shader_colored, GLuint shader_textured);
+    
+        void SubmitMesh(const Mesh& mesh);
+        void ApplyMeshChanges();
+	
+    	GLuint AddTexture(const char* texture_path);	
+        void Render();
+    
+        void Clear();
+    
+    private:
+	GLuint m_shaderColored, m_shaderTextured;
+	std::vector<std::unique_ptr<Texture>> m_textures;
 
-            // FOR NOW WE ARE HANDLING ONLY THE DYNAMIC MESHES. WILL BE IMPROVED
-            unsigned int AddMesh(Graphics::MeshType mesh_type); // TODO : WILL BE IMPROVED
-
-            void UpdateMesh(const unsigned int mesh_id, const std::array<float, 3> position, const std::vector<Graphics::VertexColored>& vertex_list);
-            void UpdateMesh(const unsigned int mesh_id, const std::array<float, 3> position, const std::vector<Graphics::VertexTextured>& vertex_list, GLuint texture_id);
-            void UpdateMeshPosition(unsigned int mesh_id, std::array<float, 3> position);
-
-            void Render() const;
-
-            void Clear();
-        private:
-        GLuint m_shaderColored, m_shaderTextured;
-        GLint m_transformLocationColored, m_transformLocationTextured;
-        std::vector<std::unique_ptr<Graphics::Mesh>> m_meshesColored;
-        std::vector<std::unique_ptr<Graphics::Mesh>> m_meshesTextured;
-        GLFWwindow * m_window;
+        std::unique_ptr<BatchColored> m_coloredBatch;
+	    std::map<GLuint, std::unique_ptr<BatchTextured>> m_texturedBatches;
     };
 
 } // namespace Engine

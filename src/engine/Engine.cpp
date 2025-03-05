@@ -2,7 +2,6 @@
 #include "engine/Initialization.h"
 
 #include "graphics/Shader.h"
-#include "graphics/MeshStatic.h"
 #include "utils/Logger.h"
 
 namespace Engine {
@@ -14,7 +13,7 @@ namespace Engine {
     int Engine::m_Initialize() {   
         Utils::Logger::Log("Initializing application...");
 
-        if (m_GLFWInit(&m_window) != 0) {
+        if (m_GLFWInit(&window) != 0) {
             Utils::Logger::Log("Failed to initialize GLFW");
             return -1;
         } else {
@@ -31,16 +30,16 @@ namespace Engine {
         if(m_ShaderInit(m_shaderColored, "../res/shaders/colored.vert", "../res/shaders/colored.frag") != 0) {
             Utils::Logger::Log("Failed to initialize Colored Mesh Shaders");
         } else {
-            Utils::Logger::Log("Colored Mesh Shaders initialized");
+            Utils::Logger::Log("Colored Mesh Shaders initialized", m_shaderColored);
         }
 
         if(m_ShaderInit(m_shaderTextured, "../res/shaders/textured.vert", "../res/shaders/textured.frag") != 0) {
             Utils::Logger::Log("Failed to initialize Textured Mesh Shaders");
         } else {
-            Utils::Logger::Log("Textured Mesh Shaders initialized");
+            Utils::Logger::Log("Textured Mesh Shaders initialized", m_shaderTextured);
         }
 
-        renderer = std::move(std::make_unique<Renderer>(m_window, m_shaderColored, m_shaderTextured));
+        renderer = std::move(std::make_unique<Renderer>(1 /*TEMP TEXTURE ID, TODO.*/, m_shaderColored, m_shaderTextured));
         return 0;
     }
 
@@ -56,6 +55,6 @@ namespace Engine {
     }
 
     bool Engine::GetEngineShouldTerminate() const {
-        return glfwWindowShouldClose(m_window);
+        return glfwWindowShouldClose(window);
     }
 } // namespace Engine

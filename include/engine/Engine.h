@@ -20,12 +20,12 @@ public:
 
     std::unique_ptr<Renderer> renderer;
 
+    GLFWwindow* window = nullptr;
 private:
     int m_Initialize();
 
     GLuint m_shaderColored = 0;
     GLuint m_shaderTextured = 0;
-    GLFWwindow* m_window = nullptr;
 };
 
 } // namespace Engine

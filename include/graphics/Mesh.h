@@ -2,48 +2,35 @@
 #define MESH_H
 
 #include <GL/glew.h>
-
+#include <glm/glm.hpp>
 #include <vector>
 #include <array>
 
 namespace Graphics {
-
-    struct VertexColored {
-        float position[3];
-        float color[4];
-    };
-
-    struct VertexTextured {
-        float position[3];
-        float textureCoord[2];
-    };
-
-    enum class MeshType {
-        MESH_DYNAMIC,
-        MESH_STATIC,
-        MESH_STATIC_TEXTURED
-    };
-
+    
     class Mesh {
     public:
-        Mesh();
-    // TODO : DO NOT CREATE MESHES IN THEIR CONSTRUCTORS
-        virtual void Render(GLint transform_location) const = 0;
-        virtual void Clear() = 0;
-        virtual void UpdateGeometry(VertexColored* vertices, GLsizei vertex_count) {};
-        virtual void UpdateGeometry(VertexTextured* vertices, GLsizei vertex_count, GLuint texture_id) {};
-        [[nodiscard]] virtual const float* GetPosition() const = 0;
-        virtual void SetPosition(const float x, const float y, const float z) = 0;
+        Mesh() {
+            m_AssignID();
+        }
 
-        virtual void UpdateGeometry(const std::array<float, 3>& position, const std::vector<VertexColored> &vertex_list) {}
-        virtual void UpdateGeometry(const std::array<float, 3>& position, const std::vector<VertexTextured> &vertex_list, GLuint texture_id) {}
+        std::vector<glm::vec3> vertices;
+        std::vector<glm::vec2> uvs;
+        std::vector<glm::vec3> colors;
+        std::vector<unsigned int> indices;
+        GLuint textureID = 0;
 
-        unsigned int GetID() const;
+        unsigned int GetID() const { return m_id; }
     private:
         unsigned int m_id;
-        void m_AssignID();
+
+        void m_AssignID() {
+            static unsigned int s_meshCount = 0;
+            m_id = s_meshCount;
+            s_meshCount ++;
+        }
     };
 
-}
+} // namespace Graphics
 
 #endif // MESH_H

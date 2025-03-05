@@ -7,6 +7,6 @@ out vec2 vTexCoord;
 uniform vec3 Transformation;
 
 void main() {
-    gl_Position = vec4(Transformation + aPosition, 1.0);
+    gl_Position = vec4(/*Transformation + */aPosition, 1.0);
     vTexCoord = aTexCoord;
 }

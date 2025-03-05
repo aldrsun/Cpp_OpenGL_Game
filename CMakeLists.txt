@@ -18,10 +18,8 @@ add_executable(main
 	src/engine/EventManager.cpp
 
         src/graphics/Shader.cpp
-        src/graphics/Mesh.cpp
-        src/graphics/MeshStatic.cpp
-        src/graphics/MeshDynamic.cpp
-       	src/graphics/MeshStaticTextured.cpp
+        src/graphics/BatchColored.cpp
+        src/graphics/BatchTextured.cpp
 
         src/utils/Logger.cpp
         
