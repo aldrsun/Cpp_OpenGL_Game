@@ -7,7 +7,7 @@
 #include <array>
 
 namespace Graphics {
-    
+
     class Mesh {
     public:
         Mesh() {

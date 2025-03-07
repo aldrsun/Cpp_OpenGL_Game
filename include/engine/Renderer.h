@@ -22,17 +22,17 @@ namespace Engine {
     class Renderer {
     public:
         Renderer(GLuint texture_id, GLuint shader_colored, GLuint shader_textured, std::shared_ptr<GameObjects::Camera> camera);
-        
+
         void SetActiveCamera(std::shared_ptr<GameObjects::Camera> camera);
 
         void SubmitMesh(const Mesh& mesh);
         void ApplyMeshChanges();
-	
-    	GLuint AddTexture(const char* texture_path);	
+
+        GLuint AddTexture(const char* texture_path);
         void Render();
-    
+
         void Clear();
-    
+
     private:
         std::shared_ptr<GameObjects::Camera> m_activeCamera;
         GLuint m_ulocTransformationColored;
@@ -42,7 +42,7 @@ namespace Engine {
         std::vector<std::unique_ptr<Texture>> m_textures;
 
         std::unique_ptr<BatchColored> m_coloredBatch;
-	    std::map<GLuint, std::unique_ptr<BatchTextured>> m_texturedBatches;
+        std::map<GLuint, std::unique_ptr<BatchTextured>> m_texturedBatches;
     };
 
 } // namespace Engine

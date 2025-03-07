@@ -15,17 +15,17 @@ add_executable(main
         src/engine/Application.cpp
         src/engine/Initialization.cpp
         src/engine/Renderer.cpp
-	src/engine/EventManager.cpp
+    src/engine/EventManager.cpp
 
         src/graphics/Shader.cpp
         src/graphics/BatchColored.cpp
         src/graphics/BatchTextured.cpp
 
         src/utils/Logger.cpp
-        
+
         src/game/Game.cpp
-        
-	src/gameobjects/Rectangle.cpp
+
+    src/gameobjects/Rectangle.cpp
         src/gameobjects/Camera.cpp
         )
 

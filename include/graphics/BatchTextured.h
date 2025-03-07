@@ -9,16 +9,16 @@ namespace Graphics {
     class BatchTextured : public Batch {
     public:
         BatchTextured(GLuint texture_id);
-    
+
         ~BatchTextured();
-    
+
         void SubmitMesh(const Mesh& mesh) override;
         void ApplyMeshChanges() override;
-    
+
         void Render() const override;
-    
+
         void Clear() override;
-    
+
     private:
         GLuint m_vao, m_vbo, m_ebo, m_uvbo;
         GLuint m_textureID;

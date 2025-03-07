@@ -18,7 +18,7 @@ namespace Graphics {
         glDeleteVertexArrays(1, &m_vao);
         glDeleteBuffers(1, &m_vbo);
         glDeleteBuffers(1, &m_ebo);
-	    glDeleteBuffers(1, &m_uvbo);
+        glDeleteBuffers(1, &m_uvbo);
     }
 
     void BatchTextured::SubmitMesh(const Mesh& mesh) {
@@ -39,7 +39,7 @@ namespace Graphics {
             return;
 
         glBindVertexArray(m_vao);
-        
+
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
         glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(glm::vec3), m_vertices.data(), GL_STATIC_DRAW);
         glEnableVertexAttribArray(0);
@@ -66,7 +66,7 @@ namespace Graphics {
         glBindVertexArray(m_vao);
         glBindTexture(GL_TEXTURE_2D, m_textureID);
         glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);
-    	glBindVertexArray(0);
+        glBindVertexArray(0);
     }
 
     void BatchTextured::Clear() {

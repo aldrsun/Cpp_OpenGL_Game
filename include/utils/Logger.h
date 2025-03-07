@@ -15,7 +15,7 @@ namespace Utils {
             File,
             ConsoleAndFile,
         };
-    
+
         enum class LogLevel {
             Log,
             Debug,
@@ -25,16 +25,16 @@ namespace Utils {
         };
 
         static void SetLogType(const LogType& log_type);
-        
+
         template<typename ... Params>
         static void Log(const LogLevel& log_level, const Params& ... params) {
             char buffer[s_bufferSize];
             char* p_cursor = buffer;
             std::snprintf(p_cursor, s_bufferSize, "%s", m_LogLevelPrefix[log_level]);
             p_cursor += std::strlen(m_LogLevelPrefix[log_level]);
-    
+
             m_HandleLogParams(buffer, p_cursor, params...);
-    
+
             std::cout << buffer << std::endl;
         }
 
@@ -61,12 +61,12 @@ namespace Utils {
                 std::snprintf(p_cursor, s_bufferSize - (p_cursor - buffer), "%s", oss.str().c_str());
             }
         }
-    
+
         template<typename Param, typename ... Params>
         static void m_HandleLogParams(char* buffer, char* p_cursor, const Param& param, const Params& ... params) {
             m_HandleLogParams(buffer, p_cursor, param);
             p_cursor += std::strlen(p_cursor);
-    
+
             *p_cursor = ' ';
             p_cursor ++;
             m_HandleLogParams(buffer, p_cursor, params ...);

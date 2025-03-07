@@ -6,6 +6,6 @@ int main() {
     Game::Game *g = new Game::Game();
 
     g->Run();
-    
+
     Utils::Logger::Log("Application exiting");
 }

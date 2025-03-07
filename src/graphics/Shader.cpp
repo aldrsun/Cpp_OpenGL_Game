@@ -32,11 +32,11 @@ namespace Shader {
         }
         return shader;
     }
-        
+
     GLuint CreateShaderProgram(const char* vertex_shader_path, const char* fragment_shader_path) {
         std::string vertex_shader_source = Shader::ReadShaderFile(vertex_shader_path);
         std::string fragment_shader_source = Shader::ReadShaderFile(fragment_shader_path);
-        
+
         GLuint vertex_shader = CompileShader(GL_VERTEX_SHADER, vertex_shader_source.c_str());
         if (vertex_shader == 0) return 0;
 

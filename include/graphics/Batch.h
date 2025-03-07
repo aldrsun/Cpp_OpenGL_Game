@@ -12,12 +12,12 @@ namespace Graphics {
     class Batch {
     public:
         virtual ~Batch() = default;
-    
+
         virtual void SubmitMesh(const Mesh& mesh) = 0;
         virtual void ApplyMeshChanges() = 0;
-    
+
         virtual void Render() const = 0;
-    
+
         virtual void Clear() = 0;
     };
 

@@ -12,7 +12,7 @@ namespace Engine {
         m_Initialize();
     }
 
-    int Engine::m_Initialize() {   
+    int Engine::m_Initialize() {
         Utils::Logger::Log("Initializing application...");
 
         if (m_GLFWInit(&window) != 0) {
@@ -27,7 +27,7 @@ namespace Engine {
             return -1;
         } else {
             Utils::Logger::Log("GLEW Initialized");
-        } 
+        }
 
         if(m_ShaderInit(m_shaderColored, "../res/shaders/colored.vert", "../res/shaders/colored.frag") != 0) {
             Utils::Logger::Log("Failed to initialize Colored Mesh Shaders");

@@ -18,7 +18,7 @@ namespace Graphics {
 
     void BatchColored::SubmitMesh(const Mesh& mesh) {
         m_isChanged = true;
-        
+
         size_t vertex_offset = m_vertices.size();
         m_vertices.insert(m_vertices.end(), mesh.vertices.begin(), mesh.vertices.end());
         m_colors.insert(m_colors.end(), mesh.colors.begin(), mesh.colors.end());
@@ -47,7 +47,7 @@ namespace Graphics {
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), m_indices.data(), GL_STATIC_DRAW);
-    
+
         glBindVertexArray(0);
         m_isEmpty = false;
     }
@@ -65,5 +65,5 @@ namespace Graphics {
         m_colors.clear();
         m_indices.clear();
     }
-    
+
 } // namespace Graphics

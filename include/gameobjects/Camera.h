@@ -8,7 +8,7 @@ namespace GameObjects {
     class Camera {
     public:
         Camera(const glm::vec3& position, const glm::vec3& look);
-        
+
         glm::mat4 GetTransformation() const;
 
         glm::vec3 GetPosition() const;

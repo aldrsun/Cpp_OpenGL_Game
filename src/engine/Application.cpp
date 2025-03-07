@@ -29,32 +29,32 @@ namespace Engine {
         coloredMesh.indices = {
             0, 1, 2, 2, 3, 0
         };
-        
-	renderer->SubmitMesh(coloredMesh);
 
-	Mesh texturedMesh;
-	texturedMesh.textureID = renderer->AddTexture("../res/textures/texture1.jpg");
-	
-	texturedMesh.vertices = {
-	    glm::vec3(-0.5f, -0.75f, 0.0f),
-	    glm::vec3( 0.0f, -0.75f, 0.0f),
-	    glm::vec3( 0.0f, -0.25f, 0.0f),
-	    glm::vec3(-0.5f, -0.25f, 0.0f)
-	};
+    renderer->SubmitMesh(coloredMesh);
 
-	texturedMesh.uvs = {
-	    glm::vec2(0.0f, 0.0f),
-	    glm::vec2(1.0f, 0.0f),
-	    glm::vec2(1.0f, 1.0f),
-	    glm::vec2(0.0f, 1.0f)
-	};
+    Mesh texturedMesh;
+    texturedMesh.textureID = renderer->AddTexture("../res/textures/texture1.jpg");
 
-	texturedMesh.indices = {
-	    0, 1, 2, 2, 3, 0
-	};
-	
-	renderer->SubmitMesh(texturedMesh);
-	renderer->ApplyMeshChanges();
+    texturedMesh.vertices = {
+        glm::vec3(-0.5f, -0.75f, 0.0f),
+        glm::vec3( 0.0f, -0.75f, 0.0f),
+        glm::vec3( 0.0f, -0.25f, 0.0f),
+        glm::vec3(-0.5f, -0.25f, 0.0f)
+    };
+
+    texturedMesh.uvs = {
+        glm::vec2(0.0f, 0.0f),
+        glm::vec2(1.0f, 0.0f),
+        glm::vec2(1.0f, 1.0f),
+        glm::vec2(0.0f, 1.0f)
+    };
+
+    texturedMesh.indices = {
+        0, 1, 2, 2, 3, 0
+    };
+
+    renderer->SubmitMesh(texturedMesh);
+    renderer->ApplyMeshChanges();
 
         Mesh coloredMesh2;
         coloredMesh2.vertices = {
