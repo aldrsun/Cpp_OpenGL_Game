@@ -5,7 +5,8 @@ namespace Engine {
 
 enum class EventType {
     WindowResize,
-    KeyPress,
+    Keyboard,
+    MouseMovement,
     CollisionEvent // Development Purposes, temporary
 };
 
@@ -20,12 +21,17 @@ public:
     WindowResizeEvent(int w, int h) : width(w), height(h) {}
 };
 
-class KeyPressEvent : public Event {
+class KeyboardEvent : public Event {
 public:
-    int keyCode;
-    KeyPressEvent(int key_code) : keyCode(key_code) {}
+    int key, scancode, action, mods;
+    KeyboardEvent( int key, int scancode, int action, int mods) : key(key), scancode(scancode), action(action), mods(mods) {}
 };
 
+class MouseMovementEvent : public Event {
+public:
+    double x, y;
+    MouseMovementEvent(double x_movement, double y_movement) : x(x_movement), y(y_movement) {}
+};
 
 class CollisionEvent : public Event {
 public:

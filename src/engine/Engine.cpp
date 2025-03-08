@@ -3,6 +3,7 @@
 
 #include "gameobjects/Camera.h"
 
+#include "engine/GLFWEvents.h"
 #include "graphics/Shader.h"
 #include "utils/Logger.h"
 
@@ -22,12 +23,20 @@ namespace Engine {
             Utils::Logger::Log("GLFW Initialized");
         }
 
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+        glfwSetCursorPosCallback(window, CursorPositionCallback);
+        glfwSetKeyCallback(window, KeyboardCallback);
+
         if (m_GLEWInit() != 0) {
             Utils::Logger::Log("Failed to initialize GLEW");
             return -1;
         } else {
             Utils::Logger::Log("GLEW Initialized");
         }
+
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
 
         if(m_ShaderInit(m_shaderColored, "../res/shaders/colored.vert", "../res/shaders/colored.frag") != 0) {
             Utils::Logger::Log("Failed to initialize Colored Mesh Shaders");

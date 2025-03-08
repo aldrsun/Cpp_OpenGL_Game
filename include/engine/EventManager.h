@@ -11,11 +11,11 @@
 
 namespace Engine {
 
-    class EventDispatcher {
+    class EventManager {
     public:
-        EventDispatcher(const EventDispatcher&) = delete;
-        EventDispatcher& operator=(const EventDispatcher&) = delete;
-        static EventDispatcher& GetInstance();
+        EventManager(const EventManager&) = delete;
+        EventManager& operator=(const EventManager&) = delete;
+        static EventManager& GetInstance();
 
         using Callback = std::function<void(const Event&)>;
 
@@ -24,7 +24,7 @@ namespace Engine {
         void Dispatch();
 
     private:
-        EventDispatcher() = default;
+        EventManager() = default;
 
         std::unordered_map<EventType, std::vector<Callback>> m_subscribers;
         std::queue<std::pair<std::unique_ptr<Event>, EventType>> m_eventQueue;

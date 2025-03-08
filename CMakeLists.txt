@@ -15,7 +15,7 @@ add_executable(main
         src/engine/Application.cpp
         src/engine/Initialization.cpp
         src/engine/Renderer.cpp
-    src/engine/EventManager.cpp
+        src/engine/EventManager.cpp
 
         src/graphics/Shader.cpp
         src/graphics/BatchColored.cpp
@@ -23,10 +23,11 @@ add_executable(main
 
         src/utils/Logger.cpp
 
-        src/game/Game.cpp
-
-    src/gameobjects/Rectangle.cpp
+        src/gameobjects/Rectangle.cpp
         src/gameobjects/Camera.cpp
+
+        src/game/Game.cpp
+        src/game/CameraController.cpp
         )
 
 # Add include directory
