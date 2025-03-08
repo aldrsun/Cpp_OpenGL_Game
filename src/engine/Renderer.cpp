@@ -26,6 +26,10 @@ namespace Engine {
         m_activeCamera = camera;
     }
 
+    std::shared_ptr<GameObjects::Camera> Renderer::GetActiveCamera() const {
+        return m_activeCamera;
+    }
+
     void Renderer::SubmitMesh(const Mesh& mesh) {
         if (mesh.textureID != 0) {
             if (m_texturedBatches.find(mesh.textureID) != m_texturedBatches.end()) {

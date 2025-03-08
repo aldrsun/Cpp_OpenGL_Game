@@ -1,53 +1,83 @@
 #include "gameobjects/Camera.h"
 
+#include <math.h>
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/glm.hpp>
+
+#include "utils/Logger.h"
 
 namespace GameObjects {
 
-    Camera::Camera(const glm::vec3& position, const glm::vec3& look) {
+    Camera::Camera(const glm::vec3& position, const glm::vec3& target) {
         m_vPosition = position;
-        m_vFront = glm::normalize(look - position);
-        m_CalculateTransformation();
-    }
-
-    glm::mat4 Camera::GetTransformation() const {
-        return m_mTransformation;
+        m_vFront = glm::normalize(target - position);
+        m_vRight = glm::normalize(glm::cross(m_vFront, m_vUp));
+        m_CalculateViewMatrix();
+        m_CalculatePerspectiveMatrix();
     }
 
     glm::vec3 Camera::GetPosition() const {
         return m_vPosition;
     }
 
-    void Camera::SetPosition(const glm::vec3& position) {
-        m_vPosition = position;
-        m_CalculateTransformation();
+    glm::mat4 Camera::GetTransformation() const {
+        return m_mTransformation;
     }
 
-    void Camera::m_CalculateTransformation() {
-        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 Camera::GetFront() const {
+        return m_vFront;
+    }
 
-        glm::vec3 right = glm::normalize(glm::cross(m_vFront, up));
+    glm::vec3 Camera::GetRight() const {
+        return m_vRight;
+    }
 
-        glm::vec3 trueUp = glm::cross(right, m_vFront);
+    void Camera::SetPosition(const glm::vec3& position) {
+        m_vPosition = position;
+        m_CalculateViewMatrix();
+    }
 
-        m_mTransformation = glm::mat4(
-            glm::vec4(right, 0.0f),
-            glm::vec4(trueUp, 0.0f),
+    void Camera::LookAt(const glm::vec3& target) {
+        if(target == m_vPosition) {
+            Utils::Logger::Log(Utils::Logger::LogLevel::Error, "Camera target set same as camera position.");
+            return;
+        }
+        m_vFront = glm::normalize(target - m_vPosition);
+        m_vRight = glm::normalize(glm::cross(m_vFront, m_vUp));
+        m_CalculateViewMatrix();
+    }
+
+    void Camera::SetPitchYaw(const float& pitch, const float& yaw) {
+        LookAt(m_vPosition + glm::vec3(
+            sinf(yaw) * cosf(pitch),
+            sinf(pitch),
+            cosf(yaw) * cosf(pitch)));
+    }
+
+    void Camera::m_CalculateViewMatrix() {
+        glm::vec3 true_up = glm::cross(m_vRight, m_vFront);
+
+        m_mView = glm::mat4(
+            glm::vec4(m_vRight, 0.0f),
+            glm::vec4(true_up, 0.0f),
             glm::vec4(-m_vFront, 0.0f),
             glm::vec4(m_vPosition, 1.0f)
         );
 
-        m_mTransformation = glm::inverse(m_mTransformation);
+        m_mView = glm::inverse(m_mView);
+        m_mTransformation = m_mPerspective * m_mView;
+    }
 
-        float fov = glm::radians(120.0f);
+    void Camera::m_CalculatePerspectiveMatrix() {
+        float fov = glm::radians(90.0f);
         float aspectRatio = 1.0f;
         float nearClip = 0.1f;
         float farClip = 100.0f;
 
-        glm::mat4 perspective = glm::perspective(fov, aspectRatio, nearClip, farClip);
-
-        m_mTransformation = perspective * m_mTransformation;
+        m_mPerspective = glm::perspective(fov, aspectRatio, nearClip, farClip);
+        m_mTransformation = m_mPerspective * m_mView;
     }
 
 }

@@ -24,6 +24,7 @@ namespace Engine {
         Renderer(GLuint texture_id, GLuint shader_colored, GLuint shader_textured, std::shared_ptr<GameObjects::Camera> camera);
 
         void SetActiveCamera(std::shared_ptr<GameObjects::Camera> camera);
+        std::shared_ptr<GameObjects::Camera> GetActiveCamera() const;
 
         void SubmitMesh(const Mesh& mesh);
         void ApplyMeshChanges();
