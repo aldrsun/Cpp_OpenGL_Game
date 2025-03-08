@@ -27,7 +27,7 @@ namespace Game {
    private:
         float m_pitch = 0.0f, m_yaw = 0.0f;
         float m_movementSpeed = 0.1f;
-        float m_forwardMovement = 0.0f, m_rightMovement = 0.0f; // -1.0f or 0.0f or 1.0f
+        float m_forwardMovement = 0.0f, m_backwardMovement = 0.0f, m_rightMovement = 0.0f, m_leftMovement = 0.0f; // 0.0f or 1.0f
         std::shared_ptr<GameObjects::Camera> m_camera;
     };
 

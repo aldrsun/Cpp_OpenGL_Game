@@ -27,7 +27,7 @@ namespace Game {
     }
 
     void CameraController::Update() {
-        Move(m_movementSpeed * m_forwardMovement, m_movementSpeed * m_rightMovement);
+        Move(m_movementSpeed * (m_forwardMovement -m_backwardMovement), m_movementSpeed * (m_rightMovement - m_leftMovement));
     }
 
     void CameraController::LookAt(const glm::vec3& target) {
@@ -56,23 +56,23 @@ namespace Game {
         }
         if (keyboard_event.key == GLFW_KEY_A) {
             if(keyboard_event.action == GLFW_RELEASE) {
-                m_rightMovement = 0.0f;
+                m_leftMovement = 0.0f;
             } else {
-                m_rightMovement = -1.0f;
+                m_leftMovement = 1.0f;
             }
         }
         if (keyboard_event.key == GLFW_KEY_S) {
             if(keyboard_event.action == GLFW_RELEASE) {
-                m_forwardMovement = 0;
+                m_backwardMovement = 0.0f;
             } else {
-                m_forwardMovement = -1;
+                m_backwardMovement = 1.0f;
             }
         }
         if (keyboard_event.key == GLFW_KEY_D) {
             if(keyboard_event.action == GLFW_RELEASE) {
-                m_rightMovement = 0;
+                m_rightMovement = 0.0f;
             } else {
-                m_rightMovement = 1;
+                m_rightMovement = 1.0f;
             }
         }
     }
