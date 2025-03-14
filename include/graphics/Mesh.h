@@ -26,8 +26,8 @@ namespace Graphics {
 
         void m_AssignID() {
             static unsigned int s_meshCount = 0;
-            m_id = s_meshCount;
             s_meshCount ++;
+            m_id = s_meshCount;
         }
     };
 

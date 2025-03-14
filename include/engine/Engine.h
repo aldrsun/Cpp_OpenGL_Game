@@ -26,6 +26,7 @@ private:
 
     GLuint m_shaderColored = 0;
     GLuint m_shaderTextured = 0;
+    GLuint m_shaderText = 0;
 };
 
 } // namespace Engine

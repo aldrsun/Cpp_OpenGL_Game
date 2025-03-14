@@ -35,8 +35,11 @@ namespace Engine {
             Utils::Logger::Log("GLEW Initialized");
         }
 
+        // TODO
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         if(m_ShaderInit(m_shaderColored, "../res/shaders/colored.vert", "../res/shaders/colored.frag") != 0) {
             Utils::Logger::Log("Failed to initialize Colored Mesh Shaders");
@@ -50,9 +53,16 @@ namespace Engine {
             Utils::Logger::Log("Textured Mesh Shaders initialized", m_shaderTextured);
         }
 
+        if(m_ShaderInit(m_shaderText, "../res/shaders/text.vert", "../res/shaders/text.frag") != 0) {
+            Utils::Logger::Log("Failed to initialize Text Shaders");
+        } else {
+            Utils::Logger::Log("Text Shaders initialized", m_shaderText);
+        }
+
+
         std::shared_ptr<GameObjects::Camera> camera = std::make_shared<GameObjects::Camera>(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
-        renderer = std::move(std::make_unique<Renderer>(1 /*TEMP TEXTURE ID, TODO.*/, m_shaderColored, m_shaderTextured, camera));
+        renderer = std::move(std::make_unique<Renderer>(m_shaderColored, m_shaderTextured, m_shaderText, camera));
         return 0;
     }
 

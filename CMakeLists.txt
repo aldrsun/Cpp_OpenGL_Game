@@ -6,6 +6,9 @@ set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(GLEW REQUIRED)
+find_package(PNG REQUIRED)
+find_package(Freetype REQUIRED)
+find_package(HarfBuzz REQUIRED)
 
 # Add executable
 add_executable(main
@@ -20,6 +23,9 @@ add_executable(main
         src/graphics/Shader.cpp
         src/graphics/BatchColored.cpp
         src/graphics/BatchTextured.cpp
+        src/graphics/ModelLoader.cpp
+        src/graphics/Text.cpp
+        src/graphics/FontRenderer.cpp
 
         src/utils/Logger.cpp
 
@@ -31,7 +37,21 @@ add_executable(main
         )
 
 # Add include directory
-target_include_directories(main PRIVATE include vendor)
+target_include_directories(main PRIVATE
+        include
+        vendor
+        vendor/FREETYPE
+        )
 
 # Link libraries
-target_link_libraries(main OpenGL::GL glfw GLEW::GLEW ${CMAKE_CURRENT_SOURCE_DIR}/lib/Linux/libsoil2.a)
+target_link_libraries(main
+        OpenGL::GL
+        glfw
+        GLEW::GLEW
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/Linux/libsoil2.a
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/Linux/libfreetype.a
+        harfbuzz
+        brotlidec
+        bz2
+        PNG::PNG
+        )

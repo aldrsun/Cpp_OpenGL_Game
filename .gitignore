@@ -4,3 +4,8 @@
 /release-build
 /Notes.txt
 /.vscode
+/vendor/FREETYPE/
+/CMakeFiles
+/res/fonts
+/res/models
+/res/textures
