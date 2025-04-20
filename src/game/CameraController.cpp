@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <math.h>
+#define _USE_MATH_DEFINES
 
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -35,9 +36,16 @@ namespace Game {
     }
 
     void CameraController::SetPitchYaw(const float& pitch, const float& yaw) {
-        m_pitch = pitch;
+        float new_pitch = pitch;
+        if (new_pitch < -m_maxPitch) {
+            new_pitch = -m_maxPitch;
+        }
+        if (new_pitch > m_maxPitch) {
+            new_pitch = m_maxPitch;
+        }
+        m_pitch = new_pitch;
         m_yaw = yaw;
-        m_camera->SetPitchYaw(pitch, yaw);
+        m_camera->SetPitchYaw(new_pitch, yaw);
     }
 
     void CameraController::MouseMovementEvent(const Engine::MouseMovementEvent& mouse_movement_event) {

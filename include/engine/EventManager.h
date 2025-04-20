@@ -17,6 +17,9 @@ namespace Engine {
         EventManager& operator=(const EventManager&) = delete;
         static EventManager& GetInstance();
 
+        // TODO : MAYBE RAW POINTERS INSTEAD OF std::function
+        // TODO : COMPARE A DIFFERENT STRUCTURE WITH RAW POINTERS WITH std::function
+        // TODO : ALSO I DID NOT LIKE THE COMPLEXITY OF REGISTERING A SUBSCRIBER. MUST BE SIMPLER
         using Callback = std::function<void(const Event&)>;
 
         void Subscribe(const EventType& event_type, Callback callback);

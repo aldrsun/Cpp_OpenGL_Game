@@ -95,6 +95,8 @@ namespace Graphics {
         return 0;
     }
 
+    // TODO MAKE THIS STATIC OR SOMETHING, I.E. SAVE THE GENERATED MESHES SO WE DONT GENERATE THEM IN EACH FRAME
+    // TODO MAYBE THERE CAN BE TWO TYPES OF TEXTS WHICH ONE OF THEM IS GENERATED IN EACH FRAME BUT OTHER IS STATIC
     void FontRenderer::Render(const std::string& text, float x, float y, float scale, glm::vec3 color) {
         glBindTexture(GL_TEXTURE_2D, m_atlasTextureID);
         glBindVertexArray(m_vao);

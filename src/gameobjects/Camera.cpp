@@ -39,6 +39,11 @@ namespace GameObjects {
         m_CalculateViewMatrix();
     }
 
+    void Camera::SetAspectRatio(float aspect_ratio) {
+        m_aspectRatio = aspect_ratio;
+        m_CalculatePerspectiveMatrix();
+    }
+
     void Camera::LookAt(const glm::vec3& target) {
         if(target == m_vPosition) {
             Utils::Logger::Log(Utils::Logger::LogLevel::Error, "Camera target set same as camera position.");
@@ -71,12 +76,11 @@ namespace GameObjects {
     }
 
     void Camera::m_CalculatePerspectiveMatrix() {
-        float fov = glm::radians(90.0f);
-        float aspectRatio = 1.0f;
+        float fov = glm::radians(60.0f);
         float nearClip = 0.1f;
         float farClip = 100.0f;
 
-        m_mPerspective = glm::perspective(fov, aspectRatio, nearClip, farClip);
+        m_mPerspective = glm::perspective(fov, m_aspectRatio, nearClip, farClip);
         m_mTransformation = m_mPerspective * m_mView;
     }
 

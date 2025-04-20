@@ -17,6 +17,7 @@ add_executable(main
         src/engine/Engine.cpp
         src/engine/Application.cpp
         src/engine/Initialization.cpp
+        src/engine/Window.cpp
         src/engine/Renderer.cpp
         src/engine/EventManager.cpp
 

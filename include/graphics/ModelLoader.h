@@ -24,7 +24,7 @@ namespace Graphics {
         std::vector<glm::vec2> uvs;
         std::vector<unsigned int> indices;
 
-        bool Load(const std::string& filename);
+        bool Load(const std::string& filename, float scale);
 
     private:
         std::vector<glm::vec3> m_tmpVertices;

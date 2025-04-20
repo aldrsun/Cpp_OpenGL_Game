@@ -9,19 +9,25 @@
 namespace Engine {
     using namespace Graphics;
 
-    Renderer::Renderer(GLuint shader_colored, GLuint shader_textured, GLuint shader_text, std::shared_ptr<GameObjects::Camera> camera) {
+    Renderer::Renderer(Window* window, GLuint shader_colored, GLuint shader_textured, GLuint shader_text, std::shared_ptr<GameObjects::Camera> camera) {
         m_coloredBatch = std::make_unique<BatchColored>();
         m_shaderColored = shader_colored;
         m_shaderTextured = shader_textured;
         m_shaderText = shader_text;
 
+        m_activeWindow = window;
         m_activeCamera = camera;
 
         // TODO : ADD ERROR CHECK
+        // TODO : MAKE NAMES "UNIFORM", I.E. FOLLOW A NAMING CONVENTION IN GLSL TOO.
+        // TODO : THE NAMES ARE CURRENTLY SEEMS ALMOST RANDOM
         m_ulocTransformationColored  = glGetUniformLocation(shader_colored  , "u_Transformation");
         m_ulocTransformationTextured = glGetUniformLocation(shader_textured , "u_Transformation");
         m_ulocTextProjection         = glGetUniformLocation(shader_text     , "projection");
         m_ulocTextColor              = glGetUniformLocation(shader_text     , "u_Color");
+
+        m_mTextProjection = glm::ortho(0.0f, m_activeWindow->GetWidth(), 0.0f, m_activeWindow->GetHeight());
+
     }
 
     void Renderer::SetActiveCamera(std::shared_ptr<GameObjects::Camera> camera) {
@@ -122,8 +128,7 @@ namespace Engine {
         }
 
         glUseProgram(m_shaderText);
-        glm::mat4 projection = glm::ortho(0.0f, 800.0f, 0.0f, 800.0f);
-        glUniformMatrix4fv(m_ulocTextProjection, 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(m_ulocTextProjection, 1, GL_FALSE, glm::value_ptr(m_mTextProjection));
         for (const auto& text : m_texts) {
             glUniform3fv(m_ulocTextColor, 1, glm::value_ptr(text.second->color));
             m_fonts[text.second->fontID]->Render(text.second->content, text.second->x, text.second->y, text.second->scale, text.second->color);

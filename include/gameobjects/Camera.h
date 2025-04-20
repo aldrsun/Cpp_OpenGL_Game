@@ -19,7 +19,11 @@ namespace GameObjects {
 
         glm::vec3 GetFront() const;
         glm::vec3 GetRight() const;
+
+        void SetAspectRatio(float aspect_ratio);
     private:
+        float m_aspectRatio = 1.0f;
+
         glm::vec3 m_vUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
         glm::vec3 m_vPosition;

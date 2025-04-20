@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "Window.h"
+
 #include "graphics/Mesh.h"
 #include "graphics/Texture.h"
 #include "graphics/BatchColored.h"
@@ -23,7 +25,8 @@ namespace Engine {
 
     class Renderer {
     public:
-        Renderer(GLuint shader_colored, GLuint shader_textured, GLuint shader_text, std::shared_ptr<GameObjects::Camera> camera);
+        // TODO: WORK ON WINDOW
+        Renderer(Window* window, GLuint shader_colored, GLuint shader_textured, GLuint shader_text, std::shared_ptr<GameObjects::Camera> camera);
 
         void SetActiveCamera(std::shared_ptr<GameObjects::Camera> camera);
         std::shared_ptr<GameObjects::Camera> GetActiveCamera() const;
@@ -41,6 +44,8 @@ namespace Engine {
         void Clear();
 
     private:
+        Window* m_activeWindow;
+
         std::shared_ptr<GameObjects::Camera> m_activeCamera;
         GLuint m_ulocTransformationColored;
         GLuint m_ulocTransformationTextured;
@@ -53,6 +58,7 @@ namespace Engine {
         std::unique_ptr<BatchColored> m_coloredBatch;
         std::map<GLuint, std::unique_ptr<BatchTextured>> m_texturedBatches;
 
+        glm::mat4 m_mTextProjection;
         std::map<unsigned int, std::unique_ptr<FontRenderer>> m_fonts;
         std::map<unsigned int, std::unique_ptr<Text>> m_texts;
     };

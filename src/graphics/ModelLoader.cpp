@@ -5,7 +5,7 @@
 
 namespace Graphics {
 
-    bool ModelLoader::Load(const std::string& filename) {
+    bool ModelLoader::Load(const std::string& filename, float scale) {
         std::ifstream file(filename);
         if (!file.is_open()) {
             std::cerr << "Failed to open file: " << filename << std::endl;
@@ -37,6 +37,13 @@ namespace Graphics {
                 }
                 m_tmpFaces.push_back(face);
             }
+        }
+
+        // Apply scale
+        for (int i = 0; i < m_tmpVertices.size(); i ++) {
+            m_tmpVertices[i][0] *= scale;
+            m_tmpVertices[i][1] *= scale;
+            m_tmpVertices[i][2] *= scale;
         }
 
         file.close();

@@ -16,17 +16,18 @@ namespace Engine {
     int Engine::m_Initialize() {
         Utils::Logger::Log("Initializing application...");
 
-        if (m_GLFWInit(&window) != 0) {
+        if (m_WindowInit(&window, 800, 800, "Engine Test") != 0) {
             Utils::Logger::Log("Failed to initialize GLFW");
             return -1;
         } else {
             Utils::Logger::Log("GLFW Initialized");
         }
 
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-        glfwSetCursorPosCallback(window, CursorPositionCallback);
-        glfwSetKeyCallback(window, KeyboardCallback);
+        // TODO: MAYBE PUT THESE INTO WINDOW CLASS, OR ABSTRACT AWAY THE OPTIONS IN GENERAL
+        // TODO: INPUT CLASS OR SOMETHING MAYBE?
+        glfwSetInputMode(window->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetCursorPosCallback(window->GetGLFWWindow(), CursorPositionCallback);
+        glfwSetKeyCallback(window->GetGLFWWindow(), KeyboardCallback);
 
         if (m_GLEWInit() != 0) {
             Utils::Logger::Log("Failed to initialize GLEW");
@@ -35,10 +36,11 @@ namespace Engine {
             Utils::Logger::Log("GLEW Initialized");
         }
 
-        // TODO
+        // TODO: MAYBE SOME OPENGL SETTINGS CLASS ETC?
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         glEnable(GL_BLEND);
+        glEnable(GL_MULTISAMPLE);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         if(m_ShaderInit(m_shaderColored, "../res/shaders/colored.vert", "../res/shaders/colored.frag") != 0) {
@@ -59,10 +61,11 @@ namespace Engine {
             Utils::Logger::Log("Text Shaders initialized", m_shaderText);
         }
 
-
         std::shared_ptr<GameObjects::Camera> camera = std::make_shared<GameObjects::Camera>(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+        Utils::Logger::Log("Window::m_aspectRatio, ", window->GetAspectRatio());
+        camera->SetAspectRatio(window->GetAspectRatio());
 
-        renderer = std::move(std::make_unique<Renderer>(m_shaderColored, m_shaderTextured, m_shaderText, camera));
+        renderer = std::move(std::make_unique<Renderer>(window, m_shaderColored, m_shaderTextured, m_shaderText, camera));
         return 0;
     }
 
@@ -78,6 +81,6 @@ namespace Engine {
     }
 
     bool Engine::GetEngineShouldTerminate() const {
-        return glfwWindowShouldClose(window);
+        return glfwWindowShouldClose(window->GetGLFWWindow());
     }
 } // namespace Engine

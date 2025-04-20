@@ -1,11 +1,9 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include <memory>
 
+#include "engine/Window.h"
 #include "engine/Renderer.h"
 
 namespace Engine {
@@ -20,7 +18,7 @@ public:
 
     std::unique_ptr<Renderer> renderer;
 
-    GLFWwindow* window = nullptr;
+    Window* window;
 private:
     int m_Initialize();
 
