@@ -9,6 +9,9 @@
 
 #include "utils/Logger.h"
 
+#include "engine/EventManager.h"
+#include "engine/Events.h"
+
 namespace Game {
 
     CameraController::CameraController(std::shared_ptr<GameObjects::Camera> camera) {
@@ -56,31 +59,41 @@ namespace Game {
     void CameraController::KeyboardEvent(const Engine::KeyboardEvent& keyboard_event) {
          //Utils::Logger::Log("[Keyboard]", keyboard_event.key, keyboard_event.scancode, keyboard_event.action, keyboard_event.mods);
         if (keyboard_event.key == GLFW_KEY_W) {
-            if(keyboard_event.action == GLFW_RELEASE) {
+            if (keyboard_event.action == GLFW_RELEASE) {
                 m_forwardMovement = 0.0f;
             } else {
                 m_forwardMovement = 1.0f;
             }
         }
         if (keyboard_event.key == GLFW_KEY_A) {
-            if(keyboard_event.action == GLFW_RELEASE) {
+            if (keyboard_event.action == GLFW_RELEASE) {
                 m_leftMovement = 0.0f;
             } else {
                 m_leftMovement = 1.0f;
             }
         }
         if (keyboard_event.key == GLFW_KEY_S) {
-            if(keyboard_event.action == GLFW_RELEASE) {
+            if (keyboard_event.action == GLFW_RELEASE) {
                 m_backwardMovement = 0.0f;
             } else {
                 m_backwardMovement = 1.0f;
             }
         }
         if (keyboard_event.key == GLFW_KEY_D) {
-            if(keyboard_event.action == GLFW_RELEASE) {
+            if (keyboard_event.action == GLFW_RELEASE) {
                 m_rightMovement = 0.0f;
             } else {
                 m_rightMovement = 1.0f;
+            }
+        }
+        if (keyboard_event.key == GLFW_KEY_ESCAPE) {
+            if (keyboard_event.action == GLFW_PRESS) {
+                if (m_cursorType == Engine::CursorType::HIDDEN) {
+                    m_cursorType = Engine::CursorType::VISIBLE;
+                } else {
+                    m_cursorType = Engine::CursorType::HIDDEN;
+                }
+                Engine::EventManager::GetInstance().QueueEvent(std::make_unique<Engine::CursorTypeChangeEvent>(m_cursorType), Engine::EventType::CursorTypeChange);
             }
         }
     }

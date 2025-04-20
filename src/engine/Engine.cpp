@@ -7,6 +7,8 @@
 #include "graphics/Shader.h"
 #include "utils/Logger.h"
 
+#include "engine/EventManager.h"
+
 namespace Engine {
     Engine::Engine() {
         Utils::Logger::Log("Engine::Engine()");
@@ -26,6 +28,18 @@ namespace Engine {
         // TODO: MAYBE PUT THESE INTO WINDOW CLASS, OR ABSTRACT AWAY THE OPTIONS IN GENERAL
         // TODO: INPUT CLASS OR SOMETHING MAYBE?
         glfwSetInputMode(window->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+        // INPUT MODE CHANGE EVENT REGISTER
+        EventManager::GetInstance().Subscribe(EventType::CursorTypeChange, [this](const Event& event) {
+            CursorTypeChangeEvent cursor_type_change_event = static_cast<const CursorTypeChangeEvent&>(event);
+            if (cursor_type_change_event.type == CursorType::HIDDEN) {
+                glfwSetInputMode(this->window->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            } else {
+                glfwSetInputMode(this->window->GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            }
+        });
+
+
         glfwSetCursorPosCallback(window->GetGLFWWindow(), CursorPositionCallback);
         glfwSetKeyCallback(window->GetGLFWWindow(), KeyboardCallback);
 

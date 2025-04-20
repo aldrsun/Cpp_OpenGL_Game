@@ -7,6 +7,7 @@ enum class EventType {
     WindowResize,
     Keyboard,
     MouseMovement,
+    CursorTypeChange,
     CollisionEvent // Development Purposes, temporary
 };
 
@@ -31,6 +32,17 @@ class MouseMovementEvent : public Event {
 public:
     double x, y;
     MouseMovementEvent(double x_movement, double y_movement) : x(x_movement), y(y_movement) {}
+};
+
+enum class CursorType {
+    HIDDEN,
+    VISIBLE
+};
+
+class CursorTypeChangeEvent : public Event {
+public:
+    CursorType type;
+    CursorTypeChangeEvent(CursorType cursor_type) : type(cursor_type) {}
 };
 
 class CollisionEvent : public Event {

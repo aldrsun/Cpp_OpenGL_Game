@@ -7,6 +7,8 @@
 #include "engine/Events.h"
 #include "gameobjects/Camera.h"
 
+#include "engine/Events.h"
+
 namespace Game {
 
     class CameraController {
@@ -25,6 +27,10 @@ namespace Game {
         void LookAt(const glm::vec3& target);
         void SetPitchYaw(const float& pitch, const float& yaw);
    private:
+
+        // TODO MAYBE THIS LOGIC CAN BE SEPERATED FROM CAMERA CONTROLLER.
+        Engine::CursorType m_cursorType = Engine::CursorType::HIDDEN;
+
         float m_pitch = 0.0f, m_yaw = 0.0f;
         float m_maxPitch = 1.57f;
         float m_movementSpeed = 0.1f;
